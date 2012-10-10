@@ -4,12 +4,12 @@
     "email": "tj@futura.io",
     "url": "http://futura.io"
   },
-  "name": "nodePDF",
+  "name": "nodepdf",
   "description": "Down and dirty PDF rendering in Node.js",
   "main": "./index.js",
   "version": "0.0.1",
   "keywords": [
-    "phantomjs",,
+    "phantomjs",
 	"pdf",
 	"make a pdf"
   ],
