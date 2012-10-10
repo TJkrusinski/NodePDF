@@ -14,7 +14,7 @@ npm install nodepdf
 
 ## API
 
-````
+```` javascript
 var NodePDF = require('nodepdf');
 
 var pdf = new NodePDF('http://www.google.com', 'google.pdf');
