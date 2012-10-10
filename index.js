@@ -1,6 +1,6 @@
 var	child = require('./child.js');
 
-module.exports = function(url, filename, opts){
+module.exports = function(url, filename){
 	var ps,
 		readStream,
 		me = this;
@@ -23,13 +23,14 @@ module.exports = function(url, filename, opts){
 	readStream = function(stream){
 		if(stream.toString('utf-8').length === 2){
 			me.evts['done'].call(this, 'Done! file is named: '+filename);
+			ps.kill();
 		} else {
 			me.evts['error'].call(this, 'There was a problem');
 		};
 	};
 	
 	ps.stdout.on('data', function(std){
-		console.log('stdout from phantom: '+std);
+		//console.log('stdout from phantom: '+std);
 		readStream(std);
 	});
 	
