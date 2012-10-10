@@ -5,13 +5,17 @@ Down and dirty PDF rendering in Node.js
 ## Installation
 
 ````
-npm install nodepdf
+npm install nodePDF
 ````
+
+## Dependencies
+
+1. PhantomJS
 
 ## API
 
 ````
-var NodePDF = require('nodepdf');
+var NodePDF = require('nodePDF');
 
 var pdf = new NodePDF('http://www.google.com', 'google.pdf');
 
