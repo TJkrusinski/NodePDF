@@ -24,8 +24,8 @@ pdf.on('error', function(msg){
 	console.log(msg);
 });
 
-pdf.on('done', function(msg){
-	console.log(msg);
+pdf.on('done', function(pathToFile){
+	console.log(pathToFile);
 });
 
 ````
