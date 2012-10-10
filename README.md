@@ -17,7 +17,8 @@ npm install nodepdf
 ```` javascript
 var NodePDF = require('nodepdf');
 
-var pdf = new NodePDF('http://www.google.com', 'google.pdf');
+// last argument is optional, sets the width and height for the viewport to render the pdf from.
+var pdf = new NodePDF('http://www.google.com', 'google.pdf', {width:1440, height:900});
 
 pdf.on('error', function(msg){
 	console.log(msg);
