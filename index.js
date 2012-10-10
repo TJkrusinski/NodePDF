@@ -18,11 +18,11 @@ module.exports = function(url, filename, opts){
 		this.evts[evt] = callback;
 	};
 	
-	ps = child(this.url, this.filename, this.options);
+	ps = child.child(this.url, this.filename, this.options);
 	
 	readStream = function(stream){
 		if(stream.toString('utf-8').length === 2){
-			me.evts['done'].call(this, 'Done! file is named: '+filename);
+			me.evts['done'].call(this, child.dir+'/'+filename);
 			ps.kill();
 		} else {
 			me.evts['error'].call(this, 'There was a problem');
@@ -32,6 +32,10 @@ module.exports = function(url, filename, opts){
 	ps.stdout.on('data', function(std){
 		//console.log('stdout from phantom: '+std);
 		readStream(std);
+	});
+	
+	ps.stderr.on('data', function(std){
+		me.evts['error'].call(me, std);
 	});
 	
 	return this;
