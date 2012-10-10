@@ -1,0 +1,31 @@
+{
+  "author": {
+    "name": "TJ Krusinski",
+    "email": "tj@futura.io",
+    "url": "http://futura.io"
+  },
+  "name": "nodePDF",
+  "description": "Down and dirty PDF rendering in Node.js",
+  "main": "./index.js",
+  "version": "0.0.1",
+  "keywords": [
+    "phantomjs",,
+	"pdf",
+	"make a pdf"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TJkrusinski/NodePDF"
+  },
+  "homepage": "https://github.com/TJkrusinski/NodePDF",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "license": "MIT"
+}
