@@ -5,7 +5,7 @@ Down and dirty PDF rendering in Node.js
 ## Installation
 
 ````
-npm install nodePDF
+npm install nodepdf
 ````
 
 ## Dependencies
@@ -15,7 +15,7 @@ npm install nodePDF
 ## API
 
 ````
-var NodePDF = require('nodePDF');
+var NodePDF = require('nodepdf');
 
 var pdf = new NodePDF('http://www.google.com', 'google.pdf');
 
