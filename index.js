@@ -1,14 +1,14 @@
 var	child = require('./child.js');
 
-module.exports = function(url, filename){
+module.exports = function(url, filename, opts){
 	var ps,
 		readStream,
 		me = this;
 	this.evts = {};
 
 	this.options = {
-		width: opts && opts.width ? opts.width : 2880,
-		height: opts && opts.height ? opts.height : 1440
+		width: opts && opts.width ? parseInt(opts.width, 10)*2 : 2880,
+		height: opts && opts.height ? parseInt(opts.height, 10)*2 : 1440
 	};
 	
 	this.url = url;
