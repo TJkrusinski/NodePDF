@@ -22,7 +22,7 @@ module.exports = function(url, filename, opts){
 	
 	readStream = function(stream){
 		if(stream.toString('utf-8').length === 2){
-			me.evts['done'].call(this, child.dir+'/'+filename);
+			me.evts['done'].call(this, process.env.PWD+'/'+filename);
 			ps.kill();
 		} else {
 			me.evts['error'].call(this, 'There was a problem');
