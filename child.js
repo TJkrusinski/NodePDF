@@ -1,6 +1,6 @@
 var child = require('child_process');
 
-exports.child = function(url, filename, options){
+exports.exec = function(url, filename, options){
 	var key,
 		stdin = ['phantomjs'];
 
@@ -22,4 +22,8 @@ exports.child = function(url, filename, options){
 	return child.exec(stdin.join(' '));
 };
 
-exports.dir = __dirname;
+exports.supports = function(cb, cmd) {
+	var stream = child.exec('which '+(cmd || 'phantomjs'), function(err, stdo, stde){
+		return cb(!!stdo.toString());
+	});
+};

@@ -23,6 +23,9 @@
   "devDependencies": {
     "mocha": "*"
   },
+  "scripts": {
+  	"test":"mocha tests"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"

@@ -1,13 +1,17 @@
 var	child = require('./child.js');
 
-module.exports = function(url, filename, opts){
+module.exports = function(url, fileName, opts){
 	var ps,
 		readStream,
-		me = this;
-	this.evts = {};
+		self = this;
 
+	if (!opts) opts = {};
 	if (!opts.margin) opts.margin = {};
 
+	this.url = url;
+	this.fileName = fileName;
+	this.filePath = process.env.PWD || process.cwd() || __dirname;
+	
 	this.options = {
 		width: opts && opts.width ? parseInt(opts.width, 10)*2 : 2880,
 		height: opts && opts.height ? parseInt(opts.height, 10)*2 : 1440,
@@ -22,31 +26,33 @@ module.exports = function(url, filename, opts){
 		'captureDelay': opts.captureDelay || 400
 	};
 
-	this.url = url;
-	this.filename = filename;
-
-	this.on = function(evt, callback){
+	this.evts = {};
+	this.on = function(evt, callback) {
 		this.evts[evt] = callback;
 	};
 
-	ps = child.child(this.url, this.filename, this.options);
+	child.supports(function(support){
+		if (!support)
+			self.evts['error'].call(this, 'PhanomJS not installed');
+	});
 
-	readStream = function(stream){
-		if(stream.toString('utf-8').length === 2){
-			me.evts['done'].call(this, process.env.PWD+'/'+filename);
+	ps = child.exec(this.url, this.fileName, this.options);
+
+	readStream = function(stream) {
+		if (stream.toString('utf-8').length === 2) {
+			self.evts['done'].call(this, self.filePath+'/'+self.fileName);
 			ps.kill();
 		} else {
-			me.evts['error'].call(this, 'There was a problem');
+			self.evts['error'].call(this, 'There was a problem');
 		};
 	};
 
 	ps.stdout.on('data', function(std){
-		//console.log('stdout from phantom: '+std);
 		readStream(std);
 	});
 
 	ps.stderr.on('data', function(std){
-		me.evts['error'].call(me, std);
+		self.evts['error'].call(self, std);
 	});
 
 	return this;
