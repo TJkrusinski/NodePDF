@@ -13,10 +13,10 @@ if (phantom.args.length < 2) {
 		'format': phantom.args[4] || 'A4',
 		'orientation': phantom.args[5] || 'portrait',
 		'margin': {
-			'top': phantom.args[6],
-			'right': phantom.args[7],
-			'bottom': phantom.args[8],
-			'left': phantom.args[9]
+			'top': phantom.args[6] || '1cm',
+			'right': phantom.args[7] || '1cm',
+			'bottom': phantom.args[8] || '1cm',
+			'left': phantom.args[9] || '1cm'
 		}
 	};
 	page.zoomFactor = phantom.args[10] || 1;
