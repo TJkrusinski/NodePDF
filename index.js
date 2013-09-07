@@ -6,10 +6,20 @@ module.exports = function(url, filename, opts){
 		me = this;
 	this.evts = {};
 
+	if (!opts.margin) opts.margin = {};
+
 	this.options = {
 		width: opts && opts.width ? parseInt(opts.width, 10)*2 : 2880,
 		height: opts && opts.height ? parseInt(opts.height, 10)*2 : 1440,
-		args : opts && opts.args ? opts.args : ''
+		args : opts && opts.args ? opts.args : '',
+		pageFormat: opts.pageFormat || 'A4',
+		pageOrientation: opts.pageOrientation || 'portrait',
+		pageZoom: opts.pageZoom || 1,
+		'margin-top': opts.margin.top || '1cm',
+		'margin-right': opts.margin.right || '1cm',
+		'margin-bottom': opts.margin.bottom || '1cm',
+		'margin-left': opts.margin.left || '1cm',
+		'captureDelay': opts.captureDelay || 400
 	};
 
 	this.url = url;
