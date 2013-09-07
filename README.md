@@ -32,12 +32,18 @@ pdf.on('done', function(pathToFile){
 
 ## Options
 ```` javascript
-	{
-		width:1440,
-		height:900,
-		args:'--debug=true',
-		pageFormat: 'A4', // ['A3', 'A4', 'A5', 'Legal', 'Letter', 'Tabloid']
-		pageOrientation: 'portrait', // ['portrait', 'landscape'],
-		pageZoom: 1 // 1 = 100%, 0.5 = 50%, 1.5 = 150% ...
+{
+	width:1440,
+	height:900,
+	args:'--debug=true',
+	pageFormat: 'A4', // ['A3', 'A4', 'A5', 'Legal', 'Letter', 'Tabloid']
+	pageOrientation: 'portrait', // ['portrait', 'landscape'],
+	pageZoom: 1 // 1 = 100%, 0.5 = 50%, 1.5 = 150% ...
+	margin: { // ['1cm', '1px', '1mm', '1in']
+		top: '1cm',
+		right: '1cm',
+		bottom: '1cm',
+		left: '1cm'
 	}
+}
 ````
