@@ -44,6 +44,7 @@ pdf.on('done', function(pathToFile){
 		right: '1cm',
 		bottom: '1cm',
 		left: '1cm'
-	}
+	},
+	captureDelay: 400 // ms
 }
 ````

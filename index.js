@@ -18,7 +18,8 @@ module.exports = function(url, filename, opts){
 		'margin-top': opts.margin.top || '1cm',
 		'margin-right': opts.margin.right || '1cm',
 		'margin-bottom': opts.margin.bottom || '1cm',
-		'margin-left': opts.margin.left || '1cm'
+		'margin-left': opts.margin.left || '1cm',
+		'captureDelay': opts.captureDelay || 400
 	};
 
 	this.url = url;

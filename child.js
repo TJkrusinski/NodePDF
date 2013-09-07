@@ -17,6 +17,7 @@ exports.child = function(url, filename, options){
 	stdin.push("'"+options['margin-bottom']+"'");
 	stdin.push("'"+options['margin-left']+"'");
 	stdin.push(options.pageZoom);
+	stdin.push(options.captureDelay);
 
 	return child.exec(stdin.join(' '));
 };

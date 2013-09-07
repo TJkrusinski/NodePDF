@@ -29,7 +29,7 @@ if (phantom.args.length < 2) {
 				page.render(phantom.args[1]);
 				console.log('1');
 				phantom.exit();
-			}, 400);
+			}, phantom.args[11] || 400);
 		};
 	});
 };
