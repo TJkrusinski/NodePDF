@@ -5,10 +5,21 @@ if (phantom.args.length < 2) {
 	console.log('incorrect args');
     phantom.exit();
 } else {
-    page.viewportSize = { 
-		width: phantom.args[2] || 1440, 
-		height: phantom.args[3] || 2880 
+    page.viewportSize = {
+		width: phantom.args[2] || 1440,
+		height: phantom.args[3] || 2880
 	};
+	page.paperSize = {
+		'format': phantom.args[4] || 'A4',
+		'orientation': phantom.args[5] || 'portrait',
+		'margin': {
+			'top': phantom.args[6],
+			'right': phantom.args[7],
+			'bottom': phantom.args[8],
+			'left': phantom.args[9]
+		}
+	};
+	page.zoomFactor = phantom.args[10] || 1;
     page.open(phantom.args[0], function (status) {
 		if(status !== 'success'){
 			console.log('error');
