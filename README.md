@@ -2,6 +2,8 @@
 
 Down and dirty PDF rendering in Node.js
 
+[![Build Status](https://travis-ci.org/TJkrusinski/NodePDF.png?branch=master)](https://travis-ci.org/TJkrusinski/NodePDF)
+
 ## Installation
 
 ````
