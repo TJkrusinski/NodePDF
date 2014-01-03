@@ -81,7 +81,7 @@ var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 }
 ````
 
-You can set all the properties from here: http://phantomjs.org/api/webpage/
+You can set all the properties from here: https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
 
 ## License
 
