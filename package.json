@@ -4,10 +4,13 @@
     "email": "tj@futura.io",
     "url": "http://futura.io"
   },
+  "contributors": [
+     "Steffen Persch <@n3o77>"
+  ],
   "name": "nodepdf",
   "description": "Down and dirty PDF rendering in Node.js",
   "main": "./index.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "keywords": [
     "phantomjs",
 	"pdf",
