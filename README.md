@@ -36,14 +36,14 @@ You can set the header and footer contents aswell:
 ```` javascript
 var NodePDF = require('nodepdf');
 var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
-	viewportSize: {
-		width: 3000,
-		height: 9000
+	'viewportSize': {
+		'width': 3000,
+		'height': 9000
 	},
-	paperSize: {
-		pageFormat: 'A4',
-		margin: {
-			top: '2cm'
+	'paperSize': {
+		'pageFormat': 'A4',
+		'margin': {
+			'top': '2cm'
 		},
 		'header': {
 			'height': '1cm',
@@ -54,7 +54,7 @@ var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 			'contents': 'FOOTER {currentPage} / {pages}'
 		}
 	},
-	zoomFactor: 1.1
+	'zoomFactor': 1.1
 });
 ````
 
