@@ -35,7 +35,7 @@ pdf.on('done', function(pathToFile){
 You can set the header and footer contents aswell:
 ```` javascript
 var NodePDF = require('nodepdf');
-var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
+var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 	'viewportSize': {
 		'width': 3000,
 		'height': 9000
@@ -58,7 +58,7 @@ var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 });
 ````
 
-## Options + defaults
+## Options + Defaults
 ```` javascript
 {
 	'viewportSize': {
@@ -82,6 +82,32 @@ var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 ````
 
 You can set all the properties from here: https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
+
+## Cookies
+
+```` javascript
+var NodePDF = require('nodepdf');
+var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
+	'cookies': [
+	    {
+            'name':     'Valid-Cookie-Name 1',   /* required property */
+            'value':    'Valid-Cookie-Value 1',  /* required property */
+            'domain':   'localhost',           /* required property */
+            'path':     '/foo',
+            'httponly': true,
+            'secure':   false,
+            'expires':  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+        },
+        {
+            'name':     'Valid-Cookie-Name 2',
+            'value':    'Valid-Cookie-Value 2',
+            'domain':   'localhost'
+        }
+	]
+});
+````
+
+PhantomJS Cookie Object description: https://github.com/ariya/phantomjs/wiki/API-Reference#appendix
 
 ## License
 
