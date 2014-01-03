@@ -8,16 +8,7 @@ exports.exec = function(url, filename, options){
 	stdin.push(__dirname+'/render.js');
 	stdin.push("'"+url+"'");
 	stdin.push("'"+filename+"'");
-	stdin.push(options.width);
-	stdin.push(options.height);
-	stdin.push(options.pageFormat);
-	stdin.push(options.pageOrientation);
-	stdin.push("'"+options['margin-top']+"'");
-	stdin.push("'"+options['margin-right']+"'");
-	stdin.push("'"+options['margin-bottom']+"'");
-	stdin.push("'"+options['margin-left']+"'");
-	stdin.push(options.pageZoom);
-	stdin.push(options.captureDelay);
+	stdin.push("'"+JSON.stringify(options)+"'");
 
 	return child.exec(stdin.join(' '));
 };

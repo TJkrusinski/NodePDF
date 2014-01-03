@@ -47,13 +47,25 @@ describe('pdf#done()', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
-			width: 3000,
-			height: 9000,
-			pageFormat: 'A4',
-			pageZoom: 1.1,
-			margin: {
-				top: '2cm'
+			viewportSize: {
+				width: 3000,
+				height: 9000
 			},
+			paperSize: {
+				pageFormat: 'A4',
+				margin: {
+					top: '2cm'
+				},
+				'header': {
+					'height': '4cm',
+					'contents': 'HEADER {currentPage} / {pages}'
+				},
+				'footer': {
+					'height': '4cm',
+					'contents': 'FOOTER {currentPage} / {pages}'
+				}
+			},
+			zoomFactor: 1.1
 		});
 		pdf2.on('done', function(msg){
 			assert.ok(msg);

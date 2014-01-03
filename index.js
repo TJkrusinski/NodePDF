@@ -1,31 +1,57 @@
 var	child = require('./child.js');
 
+var defaults = {
+	'viewportSize': {
+		'width': 2880,
+		'height': 1440
+	},
+	'paperSize': {
+		'format': 'A4',
+		'orientation': 'portrait',
+		'margin': {
+			'top': '1cm',
+			'right': '1cm',
+			'bottom': '1cm',
+			'left': '1cm'
+		}
+	},
+	'zoomFactor': 1,
+	'args': '',
+	'captureDelay': 400
+};
+
+//code from https://github.com/rxaviers/cldr
+var merge = function() {
+	var destination = {},
+	sources = [].slice.call( arguments, 0 );
+	sources.forEach(function( source ) {
+		var prop;
+		for ( prop in source ) {
+			if ( prop in destination && Array.isArray( destination[ prop ] ) ) {
+				// Concat Arrays
+				destination[ prop ] = destination[ prop ].concat( source[ prop ] );
+			} else if ( prop in destination && typeof destination[ prop ] === "object" ) {
+				// Merge Objects
+				destination[ prop ] = merge( destination[ prop ], source[ prop ] );
+			} else {
+				// Set new values
+				destination[ prop ] = source[ prop ];
+			}
+		}
+	});
+	return destination;
+};
+
 module.exports = function(url, fileName, opts){
 	var ps,
 		readStream,
 		self = this;
 
-	if (!opts) opts = {};
-	if (!opts.margin) opts.margin = {};
-
 	this.url = url;
 	this.fileName = fileName;
 	this.filePath = process.env.PWD || process.cwd() || __dirname;
-	
-	this.options = {
-		width: opts && opts.width ? parseInt(opts.width, 10)*2 : 2880,
-		height: opts && opts.height ? parseInt(opts.height, 10)*2 : 1440,
-		args : opts && opts.args ? opts.args : '',
-		pageFormat: opts.pageFormat || 'A4',
-		pageOrientation: opts.pageOrientation || 'portrait',
-		pageZoom: opts.pageZoom || 1,
-		'margin-top': opts.margin.top || '1cm',
-		'margin-right': opts.margin.right || '1cm',
-		'margin-bottom': opts.margin.bottom || '1cm',
-		'margin-left': opts.margin.left || '1cm',
-		'captureDelay': opts.captureDelay || 400
-	};
 
+	this.options = merge(defaults, opts);
 	this.evts = {};
 	this.on = function(evt, callback) {
 		this.evts[evt] = callback;
