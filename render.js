@@ -19,7 +19,6 @@ if (phantom.args.length < 2) {
 	contentsCb(options.paperSize.footer);
 
 	if (options.cookies) {
-		console.log('add cookies')
 		options.cookies.forEach(page.addCookie);
 		delete options.cookies;
 	}
