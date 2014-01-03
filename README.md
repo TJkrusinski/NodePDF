@@ -20,7 +20,7 @@ npm install nodepdf
 var NodePDF = require('nodepdf');
 
 // last argument is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
-var pdf = new NodePDF('http://www.google.com', 'google.pdf', {width:1440, height:900, args:'--debug=true'});
+var pdf = new NodePDF('http://www.google.com', 'google.pdf', {'viewportSize': {'width': 1440, 'height': 900}, args:'--debug=true'});
 
 pdf.on('error', function(msg){
 	console.log(msg);
@@ -32,24 +32,56 @@ pdf.on('done', function(pathToFile){
 
 ````
 
-## Options
+You can set the header and footer contents aswell:
+```` javascript
+var NodePDF = require('nodepdf');
+var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
+	viewportSize: {
+		width: 3000,
+		height: 9000
+	},
+	paperSize: {
+		pageFormat: 'A4',
+		margin: {
+			top: '2cm'
+		},
+		'header': {
+			'height': '1cm',
+			'contents': 'HEADER {currentPage} / {pages}' // If you have 2 pages the result looks like this: HEADER 1 / 2
+		},
+		'footer': {
+			'height': '1cm',
+			'contents': 'FOOTER {currentPage} / {pages}'
+		}
+	},
+	zoomFactor: 1.1
+});
+````
+
+## Options + defaults
 ```` javascript
 {
-	width:1440,
-	height:900,
-	args:'--debug=true',
-	pageFormat: 'A4', // ['A3', 'A4', 'A5', 'Legal', 'Letter', 'Tabloid']
-	pageOrientation: 'portrait', // ['portrait', 'landscape'],
-	pageZoom: 1 // 1 = 100%, 0.5 = 50%, 1.5 = 150% ...
-	margin: { // ['1cm', '1px', '1mm', '1in']
-		top: '1cm',
-		right: '1cm',
-		bottom: '1cm',
-		left: '1cm'
+	'viewportSize': {
+		'width': 2880,
+		'height': 1440
 	},
-	captureDelay: 400 // ms
+	'paperSize': {
+		'format': 'A4',
+		'orientation': 'portrait',
+		'margin': {
+			'top': '1cm',
+			'right': '1cm',
+			'bottom': '1cm',
+			'left': '1cm'
+		}
+	},
+	'zoomFactor': 1,
+	'args': '',
+	'captureDelay': 400
 }
 ````
+
+You can set all the properties from here: http://phantomjs.org/api/webpage/
 
 ## License
 
