@@ -18,6 +18,11 @@ if (phantom.args.length < 2) {
 	contentsCb(options.paperSize.header);
 	contentsCb(options.paperSize.footer);
 
+	if (options.cookies) {
+		options.cookies.forEach(page.addCookie);
+		delete options.cookies;
+	}
+
 	for (var key in options) {
 		if (options.hasOwnProperty(key) && page.hasOwnProperty(key)) {
 			page[key] = options[key];

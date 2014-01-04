@@ -47,14 +47,14 @@ describe('pdf#done()', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
-			viewportSize: {
-				width: 3000,
-				height: 9000
+			'viewportSize': {
+				'width': 3000,
+				'height': 9000
 			},
-			paperSize: {
-				pageFormat: 'A4',
-				margin: {
-					top: '2cm'
+			'paperSize': {
+				'pageFormat': 'A4',
+				'margin': {
+					'top': '2cm'
 				},
 				'header': {
 					'height': '4cm',
@@ -65,7 +65,23 @@ describe('pdf#done()', function(){
 					'contents': 'FOOTER {currentPage} / {pages}'
 				}
 			},
-			zoomFactor: 1.1
+			'zoomFactor': 1.1,
+			'cookies': [
+				{
+					'name':     'Valid-Cookie-Name 1',   /* required property */
+					'value':    'Valid-Cookie-Value 1',  /* required property */
+					'domain':   'localhost',           /* required property */
+					'path':     '/foo',
+					'httponly': true,
+					'secure':   false,
+					'expires':  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+				},
+				{
+					'name':     'Valid-Cookie-Name 2',
+					'value':    'Valid-Cookie-Value 2',
+					'domain':   'localhost'
+				}
+			]
 		});
 		pdf2.on('done', function(msg){
 			assert.ok(msg);
