@@ -70,7 +70,7 @@ module.exports = function(url, fileName, opts){
 			if (targetFilePath[0] != '/') {
 				targetFilePath = self.filePath + '/' + targetFilePath;
 			}
-                        self.evts['done'].call(this, targetFilePath);
+			self.evts['done'].call(this, targetFilePath);
 			ps.kill();
 		} else {
 			self.evts['error'].call(this, 'There was a problem');
