@@ -54,12 +54,12 @@ module.exports = function(url, fileName, opts){
 	this.options = merge(defaults, opts);
 	this.evts = {};
 	this.on = function(evt, callback) {
-		this.evts[evt] = callback;
+		self.evts[evt] = callback;
 	};
 
 	child.supports(function(support){
 		if (!support)
-			self.evts['error'].call(this, 'PhanomJS not installed');
+			self.evts['error'].call(self, 'PhanomJS not installed');
 	});
 
 	ps = child.exec(this.url, this.fileName, this.options);
