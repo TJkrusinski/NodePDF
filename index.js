@@ -42,34 +42,38 @@ var merge = function() {
 	return destination;
 };
 
+
 module.exports = function(url, fileName, opts){
 	var ps,
 		readStream,
-		self = this;
+		self = this,
+		NOOP = function() {};
 
 	this.url = url;
 	this.fileName = fileName;
 	this.filePath = process.env.PWD || process.cwd() || __dirname;
 
 	this.options = merge(defaults, opts);
-	this.evts = {};
+	this.evts = {
+		'error': NOOP,
+		'done': NOOP
+	};
 	this.on = function(evt, callback) {
 		this.evts[evt] = callback;
 	};
 
 	child.supports(function(support){
-		if (!support)
-			self.evts['error'].call(this, 'PhanomJS not installed');
+		if (!support) self.evts.error('PhantomJS not installed');
 	});
 
 	ps = child.exec(this.url, this.fileName, this.options);
 
 	readStream = function(stream) {
 		if (stream.toString('utf-8').length === 2) {
-			self.evts['done'].call(this, self.filePath+'/'+self.fileName);
+			self.evts.done(self.filePath+'/'+self.fileName);
 			ps.kill();
 		} else {
-			self.evts['error'].call(this, 'There was a problem');
+			self.evts.error('There was a problem');
 		};
 	};
 
@@ -78,7 +82,7 @@ module.exports = function(url, fileName, opts){
 	});
 
 	ps.stderr.on('data', function(std){
-		self.evts['error'].call(self, std);
+		self.evts.error(std);
 	});
 
 	return this;
