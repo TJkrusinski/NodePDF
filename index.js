@@ -70,7 +70,11 @@ module.exports = function(url, fileName, opts){
 
 	readStream = function(stream) {
 		if (stream.toString('utf-8').length === 2) {
-			self.evts.done(self.filePath+'/'+self.fileName);
+			var targetFilePath = self.fileName;
+			if (targetFilePath[0] != '/') {
+				targetFilePath = self.filePath + '/' + targetFilePath;
+			}
+			self.evts.done(targetFilePath);
 			ps.kill();
 		} else {
 			self.evts.error('There was a problem');
