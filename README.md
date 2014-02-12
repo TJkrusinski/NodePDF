@@ -20,7 +20,7 @@ npm install nodepdf
 var NodePDF = require('nodepdf');
 
 // last argument is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
-var pdf = new NodePDF('http://www.google.com', 'google.pdf', {'viewportSize': {'width': 1440, 'height': 900}, args:'--debug=true'});
+var pdf = new NodePDF('http://www.google.com', 'google.pdf', {'viewportSize': {'width': 1440, 'height': 900}, 'args': '--debug=true'});
 
 pdf.on('error', function(msg){
 	console.log(msg);
@@ -29,6 +29,7 @@ pdf.on('error', function(msg){
 pdf.on('done', function(pathToFile){
 	console.log(pathToFile);
 });
+
 
 ````
 
@@ -57,6 +58,18 @@ var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 	'zoomFactor': 1.1
 });
 ````
+
+Or set the content directly instead of using a URL:
+```` javascript
+var pdf = new NodePDF(null, 'google.pdf', {
+	'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>',
+	'viewportSize': {
+		'width': 1440,
+		'height': 900
+	},
+});
+````
+As soon the content option is set, the URL is ignored even if you set one.
 
 ## Options + Defaults
 ```` javascript
@@ -89,20 +102,20 @@ You can set all the properties from here: https://github.com/ariya/phantomjs/wik
 var NodePDF = require('nodepdf');
 var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 	'cookies': [
-	    {
-            'name':     'Valid-Cookie-Name 1',   /* required property */
-            'value':    'Valid-Cookie-Value 1',  /* required property */
-            'domain':   'localhost',           /* required property */
-            'path':     '/foo',
-            'httponly': true,
-            'secure':   false,
-            'expires':  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
-        },
-        {
-            'name':     'Valid-Cookie-Name 2',
-            'value':    'Valid-Cookie-Value 2',
-            'domain':   'localhost'
-        }
+		{
+			'name':     'Valid-Cookie-Name 1',   /* required property */
+			'value':    'Valid-Cookie-Value 1',  /* required property */
+			'domain':   'localhost',           /* required property */
+			'path':     '/foo',
+			'httponly': true,
+			'secure':   false,
+			'expires':  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+		},
+		{
+			'name':     'Valid-Cookie-Name 2',
+			'value':    'Valid-Cookie-Value 2',
+			'domain':   'localhost'
+		}
 	]
 });
 ````
