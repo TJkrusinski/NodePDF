@@ -69,7 +69,8 @@ module.exports = function(url, fileName, opts){
 	ps = child.exec(this.url, this.fileName, this.options);
 
 	readStream = function(stream) {
-		if (stream.toString('utf-8').length === 2) {
+		var result = stream.toString('utf-8')
+		if (result.indexOf('success') === 0) {
 			var targetFilePath = self.fileName;
 			if (targetFilePath[0] != '/') {
 				targetFilePath = self.filePath + '/' + targetFilePath;

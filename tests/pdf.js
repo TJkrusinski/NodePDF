@@ -27,7 +27,7 @@ describe('child#supports()', function(){
 // google vs yahoo
 
 
-describe('pdf#done()', function(){
+describe('pdf#done() 1', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf1 = new Pdf('http://www.google.com', 'google.pdf');
@@ -61,7 +61,7 @@ describe('pdf#content', function() {
 	})
 })
 
-describe('pdf#done()', function(){
+describe('pdf#done() 2', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
