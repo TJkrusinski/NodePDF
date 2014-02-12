@@ -46,7 +46,7 @@ describe('pdf#done() 1', function(){
 describe('pdf#content', function() {
 	it('fires done when content is loaded', function(d) {
 		var pdf1 = new Pdf(null, 'google.pdf', {
-			'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>'
+			'content': '<html><body>Test</body></html>'
 		});
 		pdf1.on('done', function(msg){
 			assert.ok(msg);
