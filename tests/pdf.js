@@ -107,8 +107,9 @@ describe('pdf#done() 2', function(){
 			d();
 		});
 		pdf2.on('error', function(msg){
-			assert.ok(false);
 			console.log(msg);
+			assert.ok(false);
+			d();
 		});
 	});
 });
