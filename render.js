@@ -8,6 +8,20 @@ var contentsCb = function(pobj) {
 	});
 }
 
+var cb = function(status) {
+	console.log(status)
+	if(status !== 'success'){
+		console.log('error');
+		console.log('Unable to load the address!');
+	} else {
+		window.setTimeout(function(){
+			page.render(phantom.args[1]);
+			console.log('1');
+			phantom.exit();
+		}, options.captureDelay || 400);
+	};
+}
+
 if (phantom.args.length < 2) {
 	console.log('11');
 	console.log('incorrect args');
@@ -29,16 +43,9 @@ if (phantom.args.length < 2) {
 		}
 	}
 
-	page.open(phantom.args[0], function (status) {
-		if(status !== 'success'){
-			console.log('error');
-			console.log('Unable to load the address!');
-		} else {
-			window.setTimeout(function(){
-				page.render(phantom.args[1]);
-				console.log('1');
-				phantom.exit();
-			}, options.captureDelay || 400);
-		};
-	});
+	if (options.content) {
+		page.onLoadFinished = cb;
+	} else {
+		page.open(phantom.args[0], cb);
+	}
 };

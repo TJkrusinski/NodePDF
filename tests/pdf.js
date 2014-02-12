@@ -43,6 +43,24 @@ describe('pdf#done()', function(){
 	});
 });
 
+describe('pdf#content', function() {
+	it('fires done when content is loaded', function(d) {
+		var pdf1 = new Pdf(null, 'google.pdf', {
+			'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>'
+		});
+		pdf1.on('done', function(msg){
+			assert.ok(msg);
+			assert.equal(FP + '/google.pdf', msg);
+			d();
+		});
+		pdf1.on('error', function(msg){
+			console.log(msg)
+			assert.ok(false);
+			d();
+		});
+	})
+})
+
 describe('pdf#done()', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
