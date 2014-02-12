@@ -27,7 +27,7 @@ describe('child#supports()', function(){
 // google vs yahoo
 
 
-describe('pdf#done()', function(){
+describe('pdf#done() 1', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf1 = new Pdf('http://www.google.com', 'google.pdf');
@@ -46,7 +46,7 @@ describe('pdf#done()', function(){
 describe('pdf#content', function() {
 	it('fires done when content is loaded', function(d) {
 		var pdf1 = new Pdf(null, 'google.pdf', {
-			'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>'
+			'content': '<html><body>Test</body></html>'
 		});
 		pdf1.on('done', function(msg){
 			assert.ok(msg);
@@ -61,7 +61,7 @@ describe('pdf#content', function() {
 	})
 })
 
-describe('pdf#done()', function(){
+describe('pdf#done() 2', function(){
 	it('fires done when ', function(d){
 		this.timeout(20000);
 		var pdf2 = new Pdf('http://yahoo.com', 'yahoo.pdf', {
@@ -107,8 +107,9 @@ describe('pdf#done()', function(){
 			d();
 		});
 		pdf2.on('error', function(msg){
-			assert.ok(false);
 			console.log(msg);
+			assert.ok(false);
+			d();
 		});
 	});
 });
