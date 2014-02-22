@@ -1,6 +1,6 @@
 var child = require('child_process');
 
-exports.exec = function(url, filename, options){
+exports.exec = function(url, filename, options, cb){
 	var key,
 		stdin = ['phantomjs'];
 
@@ -10,7 +10,9 @@ exports.exec = function(url, filename, options){
 	stdin.push("'"+filename+"'");
 	stdin.push("'"+JSON.stringify(options)+"'");
 
-	return child.exec(stdin.join(' '));
+	return child.exec(stdin.join(' '), function(err, stdo, stde){
+		cb ? cb(err) : null;
+	});
 };
 
 exports.supports = function(cb, cmd) {

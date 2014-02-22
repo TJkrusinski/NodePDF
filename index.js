@@ -1,4 +1,5 @@
 var	child = require('./child.js');
+var Emitter = require('events').EventEmitter;
 
 var defaults = {
 	'viewportSize': {
@@ -42,53 +43,93 @@ var merge = function() {
 	return destination;
 };
 
+/**
+ *	Constructor interface
+ */
+var exports = module.exports = Pdf;
 
-module.exports = function(url, fileName, opts){
-	var ps,
-		readStream,
-		self = this,
-		NOOP = function() {};
+function Pdf (url, fileName, opts){
+	var self = this;
 
 	this.url = url;
 	this.fileName = fileName;
 	this.filePath = process.env.PWD || process.cwd() || __dirname;
-
 	this.options = merge(defaults, opts);
-	this.evts = {
-		'error': NOOP,
-		'done': NOOP
-	};
-	this.on = function(evt, callback) {
-		self.evts[evt] = callback;
-	};
 
 	child.supports(function(support){
-		if (!support) self.evts.error('PhantomJS not installed');
-	});
-
-	ps = child.exec(this.url, this.fileName, this.options);
-
-	readStream = function(stream) {
-		var result = stream.toString('utf-8')
-		if (result.indexOf('success') === 0) {
-			var targetFilePath = self.fileName;
-			if (targetFilePath[0] != '/') {
-				targetFilePath = self.filePath + '/' + targetFilePath;
-			}
-			self.evts.done(targetFilePath);
-			ps.kill();
-		} else {
-			self.evts.error('There was a problem');
-		};
-	};
-
-	ps.stdout.on('data', function(std){
-		readStream(std);
-	});
-
-	ps.stderr.on('data', function(std){
-		self.evts.error(std);
+		if (!support) self.emit('error', 'PhantomJS not installed');
+		if (support) self.run();
 	});
 
 	return this;
+};
+
+/**
+ *	Inherit the event emitter
+ */
+Pdf.prototype = Object.create(Emitter.prototype);
+
+/**
+ *	Run the process
+ *	@method run
+ */
+Pdf.prototype.run = function() {
+	var self = this;
+
+	var ps = child.exec(this.url, this.fileName, this.options);
+
+	ps.on('exit', function(c, d){
+		if (c != 0) return self.emit('error', 'PDF conversion failed with exit of '+c);
+
+		var targetFilePath = self.fileName;
+		if (targetFilePath[0] != '/') {
+			targetFilePath = self.filePath + '/' + targetFilePath;
+		};
+
+		self.emit('done', targetFilePath);
+	});
+
+	ps.stdout.on('data', function(std){
+		self.emit('stdout', std);
+	});
+
+	ps.stderr.on('data', function(std){
+		self.emit('stderr', std);
+	});
+};
+
+/**
+ *	Use callback style rendering
+ *	@function render
+ *	@param {String} address
+ *	@param {String} file
+ *	@param {Options} address
+ *	@param {Function} callback
+ */
+exports.render = function(address, file, options, callback) {
+	var filePath = process.env.PWD || process.cwd() || __dirname;
+
+	if (typeof options == 'function') {
+		callback = options;
+		options = defaults;
+	};
+
+	options = merge(defaults, options);
+
+	child.supports(function(support){
+		if (!support) callback(true, 'PhantomJS not installed');
+
+		var ps = child.exec(address, file, options);
+
+		ps.on('exit', function(c, d){
+			if (c) return callback(true, 'Conversion failed with exit of '+c);
+
+			var targetFilePath = file;
+
+			if (targetFilePath[0] != '/')
+				targetFilePath = filePath + '/' + targetFilePath;
+
+			return callback(false, targetFilePath);
+		});
+	});
 };

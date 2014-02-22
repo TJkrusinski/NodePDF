@@ -14,13 +14,21 @@ npm install nodepdf
 
 1. PhantomJS
 
-## API
+## Contsructor API
+
+You can use NodePDF two ways, one is using a contstructor that returns an instance of `EventEmitter`.
 
 ```` javascript
 var NodePDF = require('nodepdf');
 
 // last argument is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
-var pdf = new NodePDF('http://www.google.com', 'google.pdf', {'viewportSize': {'width': 1440, 'height': 900}, 'args': '--debug=true'});
+var pdf = new NodePDF('http://www.google.com', 'google.pdf', {
+	'viewportSize': {
+		'width': 1440,
+		'height': 900
+	}, 
+	'args': '--debug=true'
+});
 
 pdf.on('error', function(msg){
 	console.log(msg);
@@ -30,8 +38,28 @@ pdf.on('done', function(pathToFile){
 	console.log(pathToFile);
 });
 
+// listen for stdout from phantomjs
+pdf.on('stdout', function(stdout){
+	 // handle
+});
+
+// listen for stderr from phantomjs
+pdf.on('stderr', function(stderr){
+	// handle
+});
 
 ````
+Or set the content directly instead of using a URL:
+```` javascript
+var pdf = new NodePDF(null, 'google.pdf', {
+	'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>',
+	'viewportSize': {
+		'width': 1440,
+		'height': 900
+	},
+});
+````
+
 
 You can set the header and footer contents aswell:
 ```` javascript
@@ -59,16 +87,25 @@ var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 });
 ````
 
-Or set the content directly instead of using a URL:
+## Callback API
+
+The callback API follows node standard callback signatures using the `render()` method.
+
 ```` javascript
-var pdf = new NodePDF(null, 'google.pdf', {
-	'content': '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>',
-	'viewportSize': {
-		'width': 1440,
-		'height': 900
-	},
+var NodePDF = require('nodepdf');
+
+// options is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
+NodePDF.render('http://www.google.com', 'google.pdf', options, function(err, filePath){
+	// handle error and fielPath
 });
+
+// use default options
+NodePDF.render('http://www.google.com', 'google.pdf', function(err, filePath){
+	// handle error and fielPath
+});
+
 ````
+
 As soon the content option is set, the URL is ignored even if you set one.
 
 ## Options + Defaults

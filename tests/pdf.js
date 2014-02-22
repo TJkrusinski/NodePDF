@@ -16,16 +16,15 @@ describe('child#supports()', function(){
 });
 
 describe('child#supports()', function(){
-	it('checks to see if foobarbaz is installed', function(d){
+	it('checks to see if asdfhijk is installed', function(d){
 		child.supports(function(exists){
 			assert.ok(!exists);
 			d();
-		}, 'foobarbaz');
+		}, 'asdfhijk');
 	});
 });
 
 // google vs yahoo
-
 
 describe('pdf#done() 1', function(){
 	it('fires done when ', function(d){
@@ -45,21 +44,20 @@ describe('pdf#done() 1', function(){
 
 describe('pdf#content', function() {
 	it('fires done when content is loaded', function(d) {
-		var pdf1 = new Pdf(null, 'google.pdf', {
+		var pdf1 = new Pdf(null, 'html.pdf', {
 			'content': '<html><body>Test</body></html>'
 		});
 		pdf1.on('done', function(msg){
 			assert.ok(msg);
-			assert.equal(FP + '/google.pdf', msg);
+			assert.equal(FP + '/html.pdf', msg);
 			d();
 		});
 		pdf1.on('error', function(msg){
-			console.log(msg)
 			assert.ok(false);
 			d();
 		});
 	})
-})
+});
 
 describe('pdf#done() 2', function(){
 	it('fires done when ', function(d){
@@ -107,8 +105,18 @@ describe('pdf#done() 2', function(){
 			d();
 		});
 		pdf2.on('error', function(msg){
-			console.log(msg);
 			assert.ok(false);
+			d();
+		});
+	});
+});
+
+describe('pdf#render()', function(){
+	it('renders a pdf with a callback style', function(d){
+		this.timeout(5000);
+		Pdf.render('http://www.google.com', 'google2.pdf', function(err, file){
+			assert.equal(err, false);
+			assert.equal(FP + '/google2.pdf', file);
 			d();
 		});
 	});
