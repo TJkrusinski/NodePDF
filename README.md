@@ -64,7 +64,7 @@ var pdf = new NodePDF(null, 'google.pdf', {
 You can set the header and footer contents aswell:
 ```` javascript
 var NodePDF = require('nodepdf');
-var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
+var pdf = new NodePDF('http://yahoo.com', 'yahoo.pdf', {
 	'viewportSize': {
 		'width': 3000,
 		'height': 9000
