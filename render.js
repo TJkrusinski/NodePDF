@@ -40,7 +40,7 @@ if (phantom.args.length < 2) {
 				page.render(phantom.args[1]);
 				console.log('success');
 				phantom.exit();
-			}, options.capturedelay || 400);
+			}, options.captureDelay || 400);
 		};
 	}
 };
