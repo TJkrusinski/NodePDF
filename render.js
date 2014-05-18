@@ -37,8 +37,7 @@ if (phantom.args.length < 2) {
 			console.log('unable to load the address!');
 		} else {
 			window.setTimeout(function(){
-        var filetype = phantom.args[1].slice(-3);
-				page.render(phantom.args[1], {format: filetype});
+				page.render(phantom.args[1], { format: 'pdf' });
 				console.log('success');
 				phantom.exit();
 			}, options.captureDelay || 400);
