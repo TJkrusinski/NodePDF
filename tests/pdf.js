@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var fs = require('fs');
 
 var Pdf = require('../index.js'),
 	child = require('../child.js'),
@@ -57,6 +58,29 @@ describe('pdf#content', function() {
 			d();
 		});
 	})
+});
+
+
+describe('pdf#content', function(){
+   it('fires error when content is too long', function(d){
+      fs.readFile(__dirname + '/data/long_content.html', function(err, data) {
+         assert.equal(undefined, err);
+         assert.notEqual(undefined, data);
+
+		   var pdfE = new Pdf(null, 'html.pdf', {
+			   'content': data
+		   });
+		   pdfE.on('done', function(msg){
+			   assert.ok(false);
+			   d();
+		   });
+	      pdfE.on('error', function(msg){
+			   assert.ok(msg);
+            assert.equal( 'content exceeds maximum length', msg);
+			   d();
+		   });
+      });
+   });
 });
 
 describe('pdf#done() 2', function(){
@@ -121,3 +145,4 @@ describe('pdf#render()', function(){
 		});
 	});
 });
+
