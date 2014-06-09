@@ -45,6 +45,7 @@ describe('pdf#done() 1', function(){
 
 describe('pdf#content', function() {
 	it('fires done when content is loaded', function(d) {
+    this.timeout(0);
 		var pdf1 = new Pdf(null, 'html.pdf', {
 			'content': '<html><body>Test</body></html>'
 		});
@@ -57,30 +58,30 @@ describe('pdf#content', function() {
 			assert.ok(false);
 			d();
 		});
-	})
+	});
 });
 
-
 describe('pdf#content', function(){
-   it('fires error when content is too long', function(d){
-      fs.readFile(__dirname + '/data/long_content.html', function(err, data) {
-         assert.equal(undefined, err);
-         assert.notEqual(undefined, data);
-
-		   var pdfE = new Pdf(null, 'html.pdf', {
-			   'content': data
-		   });
-		   pdfE.on('done', function(msg){
-			   assert.ok(false);
-			   d();
-		   });
-	      pdfE.on('error', function(msg){
-			   assert.ok(msg);
-            assert.equal( 'content exceeds maximum length', msg);
-			   d();
-		   });
+  it('fires error when content is too long', function(d){
+    fs.readFile(__dirname + '/long_content.html', function(err, data) {
+      assert.equal(undefined, err);
+      assert.notEqual(undefined, data);
+      
+      var longContent = data.toString();
+      var pdfE = new Pdf(null, 'long_content.pdf', {
+        'content': longContent
       });
-   });
+      pdfE.on('done', function(msg){
+        assert.ok(false);
+        d();
+      });
+      pdfE.on('error', function(msg){
+        assert.ok(msg);
+        assert.equal( 'content exceeds maximum length', msg);
+        d();
+      });
+    });
+  });
 });
 
 describe('pdf#done() 2', function(){
@@ -145,4 +146,3 @@ describe('pdf#render()', function(){
 		});
 	});
 });
-
