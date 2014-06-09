@@ -77,12 +77,12 @@ Pdf.prototype.run = function() {
 	var self = this;
   
 	var cmd = ['phantomjs'];
-		  cmd.push(this.options.args);
-		  cmd.push(__dirname+'/render.js');
-		  cmd.push("'"+this.url+"'");
-		  cmd.push("'"+this.fileName+"'");
-		  cmd.push("'"+JSON.stringify(this.options)+"'");
-		  cmd = cmd.join(' ');
+		cmd.push(this.options.args);
+		cmd.push(__dirname+'/render.js');
+		cmd.push("'"+this.url+"'");
+		cmd.push("'"+this.fileName+"'");
+		cmd.push("'"+JSON.stringify(this.options)+"'");
+		cmd = cmd.join(' ');
   
 	var ps;
 	child.getArgMax(function(err, argMax) {
@@ -143,12 +143,12 @@ exports.render = function(address, file, options, callback) {
 		if (!support) callback(true, 'PhantomJS not installed');
 
 		var cmd = ['phantomjs'];
-			  cmd.push(options.args);
-			  cmd.push(__dirname+'/render.js');
-			  cmd.push("'"+address+"'");
-			  cmd.push("'"+file+"'");
-			  cmd.push("'"+JSON.stringify(options)+"'");
-			  cmd = cmd.join(' ');
+			cmd.push(options.args);
+			cmd.push(__dirname+'/render.js');
+			cmd.push("'"+address+"'");
+			cmd.push("'"+file+"'");
+			cmd.push("'"+JSON.stringify(options)+"'");
+			cmd = cmd.join(' ');
   
 		var ps;
 		child.getArgMax(function(err, argMax) {
