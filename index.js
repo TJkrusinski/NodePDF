@@ -150,8 +150,8 @@ exports.render = function(address, file, options, callback) {
 		cmd.push("'"+JSON.stringify(options)+"'");
 		cmd = cmd.join(' ');
   
-		var ps;
 		child.getArgMax(function(err, argMax) {
+			var ps;
 			if (err) {
 				return callback(true, err);
 			} else if (!argMax || cmd.length < argMax) {
