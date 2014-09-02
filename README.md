@@ -131,7 +131,7 @@ As soon the content option is set, the URL is ignored even if you set one.
 }
 ````
 
-You can set all the properties from here: https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage
+You can set all the properties from here: http://phantomjs.org/api/webpage/
 
 ## Cookies
 
@@ -157,7 +157,7 @@ var pdf = new Pdf('http://yahoo.com', 'yahoo.pdf', {
 });
 ````
 
-PhantomJS Cookie Object description: https://github.com/ariya/phantomjs/wiki/API-Reference#appendix
+PhantomJS Cookie Object description: http://phantomjs.org/api/webpage/property/cookies.html
 
 ## License
 
