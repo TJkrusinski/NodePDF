@@ -1,16 +1,10 @@
 var child = require('child_process');
+var os = require('os');
 
-exports.exec = function(url, filename, options, cb){
-	var key,
-		stdin = ['phantomjs'];
+exports.exec = function(cmd, cb){
+	var key;
 
-	stdin.push(options.args);
-	stdin.push(__dirname+'/render.js');
-	stdin.push("'"+url+"'");
-	stdin.push("'"+filename+"'");
-	stdin.push("'"+JSON.stringify(options)+"'");
-
-	return child.exec(stdin.join(' '), function(err, stdo, stde){
+	return child.exec(cmd, function(err, stdo, stde){
 		cb ? cb(err) : null;
 	});
 };
@@ -18,5 +12,30 @@ exports.exec = function(url, filename, options, cb){
 exports.supports = function(cb, cmd) {
 	var stream = child.exec('which '+(cmd || 'phantomjs'), function(err, stdo, stde){
 		return cb(!!stdo.toString());
+	});
+};
+
+exports.getArgMax = function(cb) {
+	var command;
+	var type = os.type();
+
+	if (type === 'Linux' || type === 'Darwin') {
+		command = 'getconf ARG_MAX';
+	} else if (type === 'win32') {
+		return cb(null, 8191);
+	} else {
+		return cb();
+	}
+
+	child.exec(command, function(err, stdo, stde) {
+		if (!err) {
+			if (!stde) {
+				return cb(null, parseInt(stdo.substr(0, stdo.length-1)));
+			} else {
+				return cb(stde);
+			}
+		} else {
+			return cb(err);
+		}
 	});
 };

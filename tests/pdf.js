@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var fs = require('fs');
 
 var Pdf = require('../index.js'),
 	child = require('../child.js'),
@@ -44,6 +45,7 @@ describe('pdf#done() 1', function(){
 
 describe('pdf#content', function() {
 	it('fires done when content is loaded', function(d) {
+    this.timeout(0);
 		var pdf1 = new Pdf(null, 'html.pdf', {
 			'content': '<html><body>Test</body></html>'
 		});
@@ -56,7 +58,30 @@ describe('pdf#content', function() {
 			assert.ok(false);
 			d();
 		});
-	})
+	});
+});
+
+describe('pdf#content', function(){
+	it('fires error when content is too long', function(d){
+		fs.readFile(__dirname + '/long_content.html', function(err, data) {
+			assert.equal(undefined, err);
+			assert.notEqual(undefined, data);
+      
+			var longContent = data.toString();
+			var pdfE = new Pdf(null, 'long_content.pdf', {
+				'content': longContent
+			});
+			pdfE.on('done', function(msg){
+				assert.ok(false);
+				d();
+			});
+			pdfE.on('error', function(msg){
+				assert.ok(msg);
+				assert.equal( 'content exceeds maximum length', msg);
+				d();
+			});
+		});
+	});
 });
 
 describe('pdf#done() 2', function(){
@@ -118,6 +143,25 @@ describe('pdf#render()', function(){
 			assert.equal(err, false);
 			assert.equal(FP + '/google2.pdf', file);
 			d();
+		});
+	});
+});
+
+describe('pdf#content', function(){
+	it('returns error when content is too long with a callback style', function(d){
+		this.timeout(5000);
+		fs.readFile(__dirname + '/long_content.html', function(err, data) {
+			assert.equal(undefined, err);
+			assert.notEqual(undefined, data);
+      
+			var longContent = data.toString();
+			Pdf.render(null, 'long_content.pdf', {
+				'content': longContent
+			}, function(err, file) {
+				assert.equal(true, err);
+				assert.equal(file, 'content exceeds maximum length');
+				d();
+			});
 		});
 	});
 });
