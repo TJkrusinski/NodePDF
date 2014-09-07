@@ -1,5 +1,7 @@
 var child = require('child_process');
 
+var which = process.platform == 'win32' ? 'where' : 'which';
+
 exports.exec = function(url, filename, options, cb){
 	var key,
 		stdin = ['phantomjs'];
@@ -16,7 +18,7 @@ exports.exec = function(url, filename, options, cb){
 };
 
 exports.supports = function(cb, cmd) {
-	var stream = child.exec('which '+(cmd || 'phantomjs'), function(err, stdo, stde){
+	var stream = child.exec(which+' '+(cmd || 'phantomjs'), function(err, stdo, stde){
 		return cb(!!stdo.toString());
 	});
 };
