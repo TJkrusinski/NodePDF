@@ -117,19 +117,19 @@ exports.render = function(address, file, options, callback) {
 	options = merge(defaults, options);
 
 	child.supports(function(support){
-		if (!support) callback(true, 'PhantomJS not installed');
+		if (!support) callback(new Error('PhantomJS not installed'));
 
 		var ps = child.exec(address, file, options);
 
 		ps.on('exit', function(c, d){
-			if (c) return callback(true, 'Conversion failed with exit of '+c);
+			if (c) return callback(new Error('Conversion failed with exit of '+c));
 
 			var targetFilePath = file;
 
 			if (targetFilePath[0] != '/')
 				targetFilePath = filePath + '/' + targetFilePath;
 
-			return callback(false, targetFilePath);
+			return callback(null, targetFilePath);
 		});
 	});
 };
