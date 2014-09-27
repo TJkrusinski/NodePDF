@@ -115,7 +115,7 @@ describe('pdf#render()', function(){
 	it('renders a pdf with a callback style', function(d){
 		this.timeout(5000);
 		Pdf.render('http://www.google.com', 'google2.pdf', function(err, file){
-			assert.equal(err, false);
+			assert.equal(err, null);
 			assert.equal(FP + '/google2.pdf', file);
 			d();
 		});
