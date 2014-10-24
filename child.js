@@ -1,4 +1,5 @@
-var child = require('child_process');
+var child = require('child_process'),
+	shq = require('shell-quote').quote;
 
 var which = process.platform == 'win32' ? 'where' : 'which';
 
@@ -7,10 +8,12 @@ exports.exec = function(url, filename, options, cb){
 		stdin = ['phantomjs'];
 
 	stdin.push(options.args);
-	stdin.push(__dirname+'/render.js');
-	stdin.push("'"+url+"'");
-	stdin.push("'"+filename+"'");
-	stdin.push("'"+JSON.stringify(options)+"'");
+	stdin.push(shq([
+		__dirname+'/render.js',
+		url,
+		filename,
+		JSON.stringify(options),
+		]));
 
 	return child.exec(stdin.join(' '), function(err, stdo, stde){
 		cb ? cb(err) : null;
