@@ -10,7 +10,7 @@
   "name": "nodepdf",
   "description": "Down and dirty PDF rendering in Node.js",
   "main": "./index.js",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "keywords": [
     "phantomjs",
 	"pdf",
