@@ -33,8 +33,9 @@ if (phantom.args.length < 2) {
 
 	page.onLoadFinished = function(status) {
 		if(status !== 'success'){
-			console.log('error');
+			console.log('error: ' + status);
 			console.log('unable to load the address!');
+			phantom.exit();
 		} else {
 			window.setTimeout(function(){
 				page.render(phantom.args[1], { format: 'pdf' });
