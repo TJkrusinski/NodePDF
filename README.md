@@ -28,6 +28,20 @@ PDF.render(['http://host/page.html', 'http://host/'], function(err){
 });
 ```
 
+When not spawning a new phantomjs for each page, we get some
+extra performance. Here is a test on 95 local html files:
+```shell
+$ time node nodepdf.js
+real    9m32.928s
+user    5m56.769s
+sys     0m56.142s
+
+$ time node nodepdf-series.js
+real    2m47.053s
+user    1m55.567s
+sys     0m5.104s
+```
+
 ## Installation
 
 ```
