@@ -4,9 +4,26 @@ Fork of [nodepdf](https://github.com/TJkrusinski/NodePDF) to support
 multiple/series of pages:
 
 ```js
+var glob = require('glob');
+var path = require('path');
 var PDF = require('nodepdf-series');
-PDF.render(['http://host/page.html', 'file:///path/to/file'], function(err){
-	// will create ./host/page.pdf and /path/to/file.pdf
+
+glob('**/*.html', function(e, files){
+	files = files.map(function(file){
+		return path.resolve(file);
+	});
+	PDF.render(files, function(err){
+		// will create /path/to/file1.pdf, /path/to/file2.pdf, etc
+		console.log('done');
+	});
+});
+```
+
+Or:
+```js
+var PDF = require('nodepdf-series');
+PDF.render(['http://host/page.html', 'http://host/'], function(err){
+	// will create ./host/page.pdf and host.pdf
 });
 ```
 
