@@ -10,7 +10,7 @@ var PDF = require('nodepdf-series');
 
 glob('**/*.html', function(e, files){
 	files = files.map(function(file){
-		return path.resolve(file);
+		return 'file://' + path.resolve(file);
 	});
 	PDF.render(files, function(err){
 		// will create /path/to/file1.pdf, /path/to/file2.pdf, etc
