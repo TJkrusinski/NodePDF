@@ -8,19 +8,17 @@ var which = process.platform == 'win32' ? 'where' : 'which';
  *  Execute the command
  *
  *  @param {String} url
- *  @param {String} filename
  *  @param {Object} options
  *  @param {Function} [cb]
  */
-exports.exec = function(url, filename, options, cb){
+exports.exec = function(url, options, cb){
   var key;
   var stdin = ['phantomjs'];
 
   stdin.push(options.args);
   stdin.push(shq([
     __dirname+'/render.js',
-    url,
-    filename,
+    JSON.stringify(url),
     JSON.stringify(options),
   ]));
 

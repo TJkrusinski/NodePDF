@@ -8,12 +8,12 @@ var contentsCb = function(pobj) {
   });
 }
 
-if (phantom.args.length < 2) {
+if (phantom.args.length < 1) {
   console.log('11');
   console.log('incorrect args');
   phantom.exit();
 } else {
-  var options = JSON.parse(phantom.args[2]);
+  var options = JSON.parse(phantom.args[1]);
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);
@@ -29,19 +29,38 @@ if (phantom.args.length < 2) {
     }
   }
 
-  if (!options.content) page.open(phantom.args[0]);
+  var urls;
+  function process() {
+    if (urls.length > 0) {
+      url = urls[0];
+      urls.splice(0, 1);
+      page.open(url);
+    } else {
+      phantom.exit();
+    }
+  }
+
+  if (!options.content) {
+    urls = JSON.parse(phantom.args[0]);
+    if (!Array.isArray(urls)) urls = [urls];
+
+    process();
+  } else {
+    urls = [];
+  }
 
   page.onLoadFinished = function(status) {
     if(status !== 'success'){
       console.log('error: ' + status);
-      console.log('unable to load the address!');
-      phantom.exit();
+      console.log('unable to load ' + page.url);
+      process(); // recursive
     } else {
       window.setTimeout(function(){
-        page.render(phantom.args[1], { format: 'pdf' });
-        console.log('success');
-        phantom.exit();
-      }, options.captureDelay || 400);
+        var out = page.url.replace('file://', '').replace('.html', '.pdf');
+        console.log('saving to ' + out);
+        page.render(out, { format: 'pdf' });
+        process();
+      }, options.captureDelay || 0);
     };
   }
 };

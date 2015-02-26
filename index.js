@@ -1,6 +1,6 @@
 'use strict';
 
-var  child = require('./child.js');
+var child = require('./child.js');
 var Emitter = require('events').EventEmitter;
 
 var defaults = {
@@ -54,12 +54,10 @@ var merge = function() {
 
 var exports = module.exports = Pdf;
 
-function Pdf (url, fileName, opts){
+function Pdf (url, opts){
   var self = this;
 
   this.url = url;
-  this.fileName = fileName;
-  this.filePath = process.env.PWD || process.cwd() || __dirname;
   this.options = merge(defaults, opts);
 
   child.supports(function(support){
@@ -84,18 +82,12 @@ Pdf.prototype = Object.create(Emitter.prototype);
 
 Pdf.prototype.run = function() {
   var self = this;
-  var ps = child.exec(this.url, this.fileName, this.options);
+  var ps = child.exec(this.url, this.options);
 
   ps.on('exit', function(c, d){
     if (c != 0) return self.emit('error', 'PDF conversion failed with exit of '+c);
 
-    var targetFilePath = self.fileName;
-
-    if (targetFilePath[0] != '/') {
-      targetFilePath = self.filePath + '/' + targetFilePath;
-    };
-
-    self.emit('done', targetFilePath);
+    self.emit('done');
   });
 
   ps.stdout.on('data', function(std){
@@ -111,14 +103,11 @@ Pdf.prototype.run = function() {
  *  Use callback style rendering
  *
  *  @param {String} address
- *  @param {String} file
  *  @param {Options} address
  *  @param {Function} callback
  */
 
-exports.render = function(address, file, options, callback) {
-  var filePath = process.env.PWD || process.cwd() || __dirname;
-
+exports.render = function(address, options, callback) {
   if (typeof options == 'function') {
     callback = options;
     options = defaults;
@@ -129,17 +118,12 @@ exports.render = function(address, file, options, callback) {
   child.supports(function(support){
     if (!support) callback(new Error('PhantomJS not installed'));
 
-    var ps = child.exec(address, file, options);
+    var ps = child.exec(address, options);
 
     ps.on('exit', function(c, d){
       if (c) return callback(new Error('Conversion failed with exit of '+c));
 
-      var targetFilePath = file;
-
-      if (targetFilePath[0] != '/')
-        targetFilePath = filePath + '/' + targetFilePath;
-
-      return callback(null, targetFilePath);
+      return callback(null);
     });
   });
 };
