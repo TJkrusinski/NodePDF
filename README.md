@@ -29,9 +29,9 @@ PDF.render(['http://host/page.html', 'http://host/'], function(err){
 
 ## Installation
 
-````
+```
 npm install nodepdf-series
-````
+```
 
 ## Dependencies
 
@@ -42,7 +42,7 @@ npm install nodepdf-series
 You can use nodepdf-series two ways, one is using a contstructor that returns
 an instance of `EventEmitter`.
 
-```` javascript
+```js
 // last argument is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
 var pdf = new PDF('http://www.google.com', {
 	viewportSize: {
@@ -70,17 +70,17 @@ pdf.on('stderr', function(stderr){
 	console.log(stderr);
 });
 
-````
+```
 Or set the content directly instead of using a URL (will save to about:blank.pdf):
-```` javascript
+```js
 var pdf = new PDF(null, {
 	content: '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>'
 });
-````
+```
 
 
 You can set the header and footer contents aswell:
-```` javascript
+```js
 var pdf = new PDF('http://yahoo.com', {
 	header: {
 		height: '1cm',
@@ -91,13 +91,13 @@ var pdf = new PDF('http://yahoo.com', {
 		contents: 'FOOTER {currentPage} / {pages}'
 	}
 });
-````
+```
 
 ## Callback API
 
 The callback API follows node standard callback signatures using the `render()` method.
 
-```` javascript
+```js
 var PDF = require('nodepdf-series');
 
 // options is optional
@@ -110,12 +110,12 @@ PDF.render('http://www.google.com', function(err){
 	// handle error
 });
 
-````
+```
 
 As soon the content option is set, the URL is ignored even if you set one.
 
 ## Options + Defaults
-```` javascript
+```js
 {
 	viewportSize: {
 		width: 2880,
@@ -135,56 +135,28 @@ As soon the content option is set, the URL is ignored even if you set one.
 	args: '',
 	captureDelay: 0
 }
-````
+```
 
 You can set all the properties from here: http://phantomjs.org/api/webpage/
 
 ## Cookies
 
-```` javascript
+```js
 var pdf = new PDF('http://yahoo.com', {
-	cookies: [
-		{
-			name:     'Valid-Cookie-Name 1',   /* required property */
-			value:    'Valid-Cookie-Value 1',  /* required property */
-			domain:   'localhost',           /* required property */
-			path:     '/foo',
-			httponly: true,
-			secure:   false,
-			expires:  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
-		},
-		{
-			name:     'Valid-Cookie-Name 2',
-			value:    'Valid-Cookie-Value 2',
-			domain:   'localhost'
-		}
-	]
+	cookies: [{
+		name:     'Valid-Cookie-Name 1',   /* required property */
+		value:    'Valid-Cookie-Value 1',  /* required property */
+		domain:   'localhost',           /* required property */
+		path:     '/foo',
+		httponly: true,
+		secure:   false,
+		expires:  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+	},{
+		name:     'Valid-Cookie-Name 2',
+		value:    'Valid-Cookie-Value 2',
+		domain:   'localhost'
+	}]
 });
-````
+```
 
 PhantomJS Cookie Object description: http://phantomjs.org/api/webpage/property/cookies.html
-
-## License
-
-(The MIT License)
-
-Copyright (c) 2013 TJ Krusinski &lt;tj@shoflo.tv&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
