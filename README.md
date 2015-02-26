@@ -43,7 +43,8 @@ You can use nodepdf-series two ways, one is using a contstructor that returns
 an instance of `EventEmitter`.
 
 ```js
-// last argument is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
+// last argument is optional, sets the width and height for the viewport to
+// render the pdf from. (see additional options)
 var pdf = new PDF('http://www.google.com', {
 	viewportSize: {
 		width: 1440,
@@ -74,7 +75,8 @@ pdf.on('stderr', function(stderr){
 Or set the content directly instead of using a URL (will save to about:blank.pdf):
 ```js
 var pdf = new PDF(null, {
-	content: '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>'
+	content: '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" />' +
+	 				 '</body></html>'
 });
 ```
 
@@ -84,7 +86,8 @@ You can set the header and footer contents aswell:
 var pdf = new PDF('http://yahoo.com', {
 	header: {
 		height: '1cm',
-		contents: 'HEADER {currentPage} / {pages}' // If you have 2 pages the result looks like this: HEADER 1 / 2
+		contents: 'HEADER {currentPage} / {pages}'
+		// If you have 2 pages the result looks like this: HEADER 1 / 2
 	},
 	footer: {
 		height: '1cm',
@@ -95,7 +98,8 @@ var pdf = new PDF('http://yahoo.com', {
 
 ## Callback API
 
-The callback API follows node standard callback signatures using the `render()` method.
+The callback API follows node standard callback signatures using the
+`render()` method.
 
 ```js
 var PDF = require('nodepdf-series');
@@ -150,7 +154,7 @@ var pdf = new PDF('http://yahoo.com', {
 		path:     '/foo',
 		httponly: true,
 		secure:   false,
-		expires:  (new Date()).getTime() + (1000 * 60 * 60)   /* <-- expires in 1 hour */
+		expires:  (new Date()).getTime() + (1000 * 60 * 60) /* expires in 1 hour */
 	},{
 		name:     'Valid-Cookie-Name 2',
 		value:    'Valid-Cookie-Value 2',
