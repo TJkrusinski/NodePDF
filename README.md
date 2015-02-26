@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/arve0/nodepdf-series.svg?branch=v0.0.3)](https://travis-ci.org/arve0/nodepdf-series)
 # nodepdf-series
 
 Fork of [nodepdf](https://github.com/TJkrusinski/NodePDF) to support
