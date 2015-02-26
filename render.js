@@ -43,7 +43,6 @@ if (phantom.args.length < 1) {
   if (!options.content) {
     urls = JSON.parse(phantom.args[0]);
     if (!Array.isArray(urls)) urls = [urls];
-
     process();
   } else {
     urls = [];
@@ -56,11 +55,13 @@ if (phantom.args.length < 1) {
       process(); // recursive
     } else {
       window.setTimeout(function(){
-        var out = page.url.replace('file://', '').replace('.html', '.pdf');
+        var out = page.url;
+        out = out.replace(/^.*:\/\//, ''); // something://url -> 'url'
+        out = out.replace(/(\.html|\/|)$/, '.pdf') // if .html -> .pdf, else + .pdf
         console.log('saving to ' + out);
         page.render(out, { format: 'pdf' });
         process();
-      }, options.captureDelay || 0);
+      }, options.captureDelay || 100);
     };
   }
 };
