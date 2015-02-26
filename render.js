@@ -61,7 +61,7 @@ if (phantom.args.length < 1) {
         console.log('saving to ' + out);
         page.render(out, { format: 'pdf' });
         process();
-      }, options.captureDelay || 100);
+      }, options.captureDelay || 0);
     };
   }
 };
