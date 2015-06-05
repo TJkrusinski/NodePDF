@@ -48,9 +48,6 @@ sys     0m5.104s
 npm install nodepdf-series
 ```
 
-## Dependencies
-
-1. PhantomJS
 
 ## Contsructor API
 

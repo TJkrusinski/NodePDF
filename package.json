@@ -7,7 +7,7 @@
   "name": "nodepdf-series",
   "description": "Convert multiple urls to PDF.",
   "main": "./index.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "keywords": [
     "phantomjs",
     "pdf",
@@ -23,13 +23,14 @@
   },
   "homepage": "https://github.com/arve0/nodepdf-series",
   "dependencies": {
+    "phantomjs": "^1.9.17",
     "shell-quote": "1.4.x"
   },
   "devDependencies": {
     "mocha": "*"
   },
   "scripts": {
-  	"test":"mocha tests"
+    "test": "mocha tests"
   },
   "optionalDependencies": {},
   "engines": {
