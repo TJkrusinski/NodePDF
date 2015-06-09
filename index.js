@@ -18,6 +18,7 @@ var defaults = {
       'left': '1cm'
     }
   },
+  'outputQuality': '80', //0 to 100
   'zoomFactor': 1,
   'args': '',
   'captureDelay': 400
