@@ -38,7 +38,7 @@ if (phantom.args.length < 2) {
       phantom.exit();
     } else {
       window.setTimeout(function(){
-        page.render(phantom.args[1], { format: 'pdf' });
+        page.render(phantom.args[1], { format: 'pdf', quality: options.outputQuality || '80' });
         console.log('success');
         phantom.exit();
       }, options.captureDelay || 400);

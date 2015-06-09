@@ -61,7 +61,7 @@ var pdf = new NodePDF(null, 'google.pdf', {
 ````
 
 
-You can set the header and footer contents aswell:
+You can set the header and footer contents as well:
 ```` javascript
 var NodePDF = require('nodepdf');
 var pdf = new NodePDF('http://yahoo.com', 'yahoo.pdf', {
@@ -83,6 +83,7 @@ var pdf = new NodePDF('http://yahoo.com', 'yahoo.pdf', {
 			'contents': 'FOOTER {currentPage} / {pages}'
 		}
 	},
+	'outputQuality': '80'
 	'zoomFactor': 1.1
 });
 ````
@@ -96,12 +97,12 @@ var NodePDF = require('nodepdf');
 
 // options is optional, sets the width and height for the viewport to render the pdf from. (see additional options)
 NodePDF.render('http://www.google.com', 'google.pdf', options, function(err, filePath){
-	// handle error and fielPath
+	// handle error and filepath
 });
 
 // use default options
 NodePDF.render('http://www.google.com', 'google.pdf', function(err, filePath){
-	// handle error and fielPath
+	// handle error and filepath
 });
 
 ````
@@ -125,9 +126,11 @@ As soon the content option is set, the URL is ignored even if you set one.
 			'left': '1cm'
 		}
 	},
+	'outputQuality': '80' //set embedded image quality 0 - 100
 	'zoomFactor': 1,
 	'args': '',
 	'captureDelay': 400
+
 }
 ````
 
