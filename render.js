@@ -13,7 +13,11 @@ if (phantom.args.length < 2) {
   console.log('incorrect args');
   phantom.exit();
 } else {
-  var options = JSON.parse(phantom.args[2]);
+  var optionsStr = phantom.args[2];
+  // fix various escapings
+  optionsStr = optionsStr.replace(/\\!/g, '!'); // fix escaping of exclamation mark
+  optionsStr = optionsStr.replace(/\\\\"/g, '\\"'); // fix double escape of quot chars
+  var options = JSON.parse(optionsStr);
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);

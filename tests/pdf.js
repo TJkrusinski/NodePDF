@@ -56,7 +56,29 @@ describe('pdf#content', function() {
       assert.ok(false);
       d();
     });
-  })
+  });
+
+  it('fixes shell escaping in content', function(d){
+    this.timeout(5000);
+    var args = { content: '<html><head><title>PDF</title></head><body class="test"><div></div><!-- some comment --></body></html>' };
+    var pdf = new Pdf(null, 'html2.pdf', args);
+    pdf.on('done', function(file){
+      assert.equal(FP + '/html2.pdf', file);
+      d();
+    });
+
+  });
+
+  it('fixes shell escaping in content (issue #33)', function(d){
+    this.timeout(5000);
+    var args = { content: '<html><body><img src="https://www.google.com/images/srpr/logo11w.png" alt="google"/></body></html>' };
+    var pdf = new Pdf(null, 'html3.pdf', args);
+    pdf.on('done', function(file){
+      assert.equal(FP + '/html3.pdf', file);
+      d();
+    });
+
+  });
 });
 
 describe('pdf#done() 2', function(){
