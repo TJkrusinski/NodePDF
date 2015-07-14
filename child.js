@@ -2,7 +2,8 @@
 
 var child = require('child_process');
 var shq = require('shell-quote').quote;
-var which = process.platform == 'win32' ? 'where' : 'which';
+var fs = require('fs');
+var phantomjs = require('phantomjs');
 
 /**
  *  Execute the command
@@ -13,7 +14,7 @@ var which = process.platform == 'win32' ? 'where' : 'which';
  */
 exports.exec = function(url, options, cb){
   var key;
-  var stdin = ['phantomjs'];
+  var stdin = [phantomjs.path];
 
   stdin.push(options.args);
   stdin.push(shq([
@@ -32,7 +33,7 @@ exports.exec = function(url, options, cb){
  */
 
 exports.supports = function(cb, cmd) {
-  var stream = child.exec(which+' '+(cmd || 'phantomjs'), function(err, stdo, stde){
-    return cb(!!stdo.toString());
+  fs.stat((cmd || phantomjs.path), function(err){
+    cb(!err);
   });
 };
