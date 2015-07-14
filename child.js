@@ -14,7 +14,7 @@ var phantomjs = require('phantomjs');
  */
 exports.exec = function(url, options, cb){
   var key;
-  var stdin = [phantomjs.path];
+  var stdin = [ phantomjs.path.replace(/ /g, '\\ ') ];
 
   stdin.push(options.args);
   stdin.push(shq([
