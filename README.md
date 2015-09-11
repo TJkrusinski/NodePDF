@@ -83,7 +83,7 @@ var pdf = new NodePDF('http://yahoo.com', 'yahoo.pdf', {
 			'contents': 'FOOTER {currentPage} / {pages}'
 		}
 	},
-	'outputQuality': '80'
+	'outputQuality': '80',
 	'zoomFactor': 1.1
 });
 ````
@@ -126,7 +126,7 @@ As soon the content option is set, the URL is ignored even if you set one.
 			'left': '1cm'
 		}
 	},
-	'outputQuality': '80' //set embedded image quality 0 - 100
+	'outputQuality': '80', //set embedded image quality 0 - 100
 	'zoomFactor': 1,
 	'args': '',
 	'captureDelay': 400
