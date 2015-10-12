@@ -57,11 +57,15 @@ if (phantom.args.length < 1) {
       window.setTimeout(function(){
         var out = page.url;
         out = out.replace(/^.*:\/\//, ''); // something://url -> 'url'
-        out = out.replace(/(\.html|\/|)$/, '.pdf') // if .html -> .pdf, else + .pdf
+        out = out.replace(/(\.html|\/|)$/, '.pdf'); // if .html -> .pdf, else + .pdf
+        if ((window.navigator.userAgent.indexOf("Windows") != -1) && 
+            (out[0] == '/')) {
+            out = out.substring(1);
+        }
         console.log('saving to ' + out);
         page.render(out, { format: 'pdf' });
         process();
       }, options.captureDelay || 0);
-    };
-  }
-};
+    }
+  };
+}
