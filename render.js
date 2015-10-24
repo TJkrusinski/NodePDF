@@ -58,7 +58,7 @@ if (phantom.args.length < 1) {
         var out = page.url;
         out = out.replace(/^.*:\/\//, ''); // something://url -> 'url'
         out = out.replace(/(\.html|\/|)$/, '.pdf'); // if .html -> .pdf, else + .pdf
-        if ((window.navigator.userAgent.indexOf("Windows") != -1) && 
+        if ((window.navigator.userAgent.indexOf("Windows") != -1) &&
             (out[0] == '/')) {
             out = out.substring(1);
         }

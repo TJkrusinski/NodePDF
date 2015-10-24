@@ -57,6 +57,8 @@ var exports = module.exports = Pdf;
 function Pdf (url, opts){
   var self = this;
 
+  // add extra / on windows: file://C:/url -> file:///C:/url
+  url = url.replace(/file\:\/\/([A-Z])\:/, 'file:///$1:');
   this.url = url;
   this.options = merge(defaults, opts);
 
