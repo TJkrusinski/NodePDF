@@ -21,7 +21,7 @@ function exists(filename) {
 
 // clean up before and after
 describe('all tests', function() {
-  var files = ['httpbin.org.pdf', 'about\:blank.pdf', 'www.yahoo.com.pdf', 'httpbin.org/html.pdf'];
+  var files = ['httpbin.org.pdf', 'fixture.pdf', 'about', 'about:blank.pdf', 'www.yahoo.com.pdf', 'httpbin.org/html.pdf'];
   function deleteAll(){
     files.forEach(function(filename){
       if (!exists(filename)) return;
@@ -51,8 +51,6 @@ describe('all tests', function() {
     });
   });
 
-  // google vs yahoo
-
   describe('pdf#done() 1', function(){
     it('fires done when ', function(d){
       this.timeout(20000);
@@ -69,14 +67,13 @@ describe('all tests', function() {
     });
   });
 
-  describe('pdf#content', function() {
-    it('fires done when content is loaded', function(d) {
+  describe('pdf#file', function() {
+    it('renders local html files', function(d) {
       this.timeout(5000);
-      var pdf1 = new Pdf(null, {
-        'content': '<html><body>Test</body></html>'
-      });
+      var fixture = 'file:///' + path.resolve('fixture.html');
+      var pdf1 = new Pdf(fixture);
       pdf1.on('done', function(){
-        assert(exists('about\:blank.pdf'));
+        assert(exists('fixture.pdf'));
         d();
       });
       pdf1.on('error', function(msg){
