@@ -21,7 +21,7 @@ exports.exec = function(url, filename, options, cb){
     __dirname+'/render.js',
     url,
     filename,
-    JSON.stringify(options),
+    new Buffer(JSON.stringify(options)).toString('base64')
   ]));
 
   return child.exec(stdin.join(' '), function(err, stdo, stde){

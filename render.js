@@ -13,7 +13,22 @@ if (phantom.args.length < 2) {
   console.log('incorrect args');
   phantom.exit();
 } else {
-  var options = JSON.parse(phantom.args[2]);
+
+  try {
+    var encodedOpts = atob(phantom.args[2]);
+  }
+  catch (e) {
+    console.log("Options are not base64 encoded correctly");
+    phantom.exit();
+  }
+
+  try {
+    var options = JSON.parse(encodedOpts);
+  }
+  catch (e) {
+    console.log("Options are not valid JSON");
+    phantom.exit();
+  }
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);
