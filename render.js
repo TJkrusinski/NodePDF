@@ -13,7 +13,8 @@ if (phantom.args.length < 2) {
   console.log('incorrect args');
   phantom.exit();
 } else {
-  var options = JSON.parse(phantom.args[2]);
+  var optionsFile = phantom.args[2];
+  var options = require(optionsFile);
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);

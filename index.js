@@ -85,26 +85,26 @@ Pdf.prototype = Object.create(Emitter.prototype);
 
 Pdf.prototype.run = function() {
   var self = this;
-  var ps = child.exec(this.url, this.fileName, this.options);
+  child.exec(this.url, this.fileName, this.options, function (ps) {
+    ps.on('exit', function(c, d){
+      if (c != 0) return self.emit('error', 'PDF conversion failed with exit of '+c);
 
-  ps.on('exit', function(c, d){
-    if (c != 0) return self.emit('error', 'PDF conversion failed with exit of '+c);
+      var targetFilePath = self.fileName;
 
-    var targetFilePath = self.fileName;
+      if (targetFilePath[0] != '/') {
+        targetFilePath = self.filePath + '/' + targetFilePath;
+      };
 
-    if (targetFilePath[0] != '/') {
-      targetFilePath = self.filePath + '/' + targetFilePath;
-    };
+      self.emit('done', targetFilePath);
+    });
 
-    self.emit('done', targetFilePath);
-  });
+    ps.stdout.on('data', function(std){
+      self.emit('stdout', std);
+    });
 
-  ps.stdout.on('data', function(std){
-    self.emit('stdout', std);
-  });
-
-  ps.stderr.on('data', function(std){
-    self.emit('stderr', std);
+    ps.stderr.on('data', function(std){
+      self.emit('stderr', std);
+    });
   });
 };
 
@@ -130,17 +130,17 @@ exports.render = function(address, file, options, callback) {
   child.supports(function(support){
     if (!support) callback(new Error('PhantomJS not installed'));
 
-    var ps = child.exec(address, file, options);
+    child.exec(address, file, options, function (ps) {
+      ps.on('exit', function(c, d){
+        if (c) return callback(new Error('Conversion failed with exit of '+c));
 
-    ps.on('exit', function(c, d){
-      if (c) return callback(new Error('Conversion failed with exit of '+c));
+        var targetFilePath = file;
 
-      var targetFilePath = file;
+        if (targetFilePath[0] != '/')
+          targetFilePath = filePath + '/' + targetFilePath;
 
-      if (targetFilePath[0] != '/')
-        targetFilePath = filePath + '/' + targetFilePath;
-
-      return callback(null, targetFilePath);
+        return callback(null, targetFilePath);
+      });
     });
   });
 };

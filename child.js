@@ -3,6 +3,7 @@
 var child = require('child_process');
 var shq = require('shell-quote').quote;
 var which = process.platform == 'win32' ? 'where' : 'which';
+var fs = require('fs');
 
 /**
  *  Execute the command
@@ -15,17 +16,26 @@ var which = process.platform == 'win32' ? 'where' : 'which';
 exports.exec = function(url, filename, options, cb){
   var key;
   var stdin = ['phantomjs'];
+  var optsFile = __dirname + '/' + Date.now() + '.js';
 
   stdin.push(options.args);
   stdin.push(shq([
     __dirname+'/render.js',
     url,
     filename,
-    JSON.stringify(options),
+    optsFile,
   ]));
 
-  return child.exec(stdin.join(' '), function(err, stdo, stde){
-    cb ? cb(err) : null;
+  fs.writeFile(optsFile, 'module.exports='+JSON.stringify(options), 'UTF-8', function(err) {
+    if(err) {
+      return console.log(err);
+    }
+
+    var c = child.exec(stdin.join(' '));
+    c.on('exit', function () {
+      fs.unlinkSync(optsFile);
+    });
+    cb(c);
   });
 };
 
