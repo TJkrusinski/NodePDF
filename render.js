@@ -35,7 +35,7 @@ if (phantom.args.length < 1) {
       url = urls[0];
       urls.splice(0, 1);
       // add extra / on windows: file://C:/url -> file:///C:/url
-      url = url.replace(/file\:\/\/([A-Z])\:/, 'file:///$1:');
+      url = url.replace(/file\:\/\/([A-Za-z])\:/, 'file:///$1:');
       page.open(url);
     } else {
       phantom.exit();
