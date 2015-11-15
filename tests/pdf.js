@@ -70,7 +70,7 @@ describe('all tests', function() {
   describe('pdf#file', function() {
     it('renders local html files', function(d) {
       this.timeout(5000);
-      var fixture = 'file:///' + path.resolve('fixture.html');
+      var fixture = 'file://' + path.resolve('fixture.html');
       var pdf1 = new Pdf(fixture);
       pdf1.on('done', function(){
         assert(exists('fixture.pdf'));
