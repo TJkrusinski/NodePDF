@@ -4,8 +4,8 @@ var system = require('system');
 // ADDRESS CHANGE IN PARAMETERS HANDLING FOR PHANTOMJS 2.x
 var phantomargs;
 if(phantom.version.major >= 2) {
-  system.args.splice(0,1); // remove the script name from the arguments
-  phantomargs = system.args;
+  // remove the script name from the arguments
+  phantomargs = system.args.slice(1,system.args.length);
 } else {
   phantomargs = phantom.args;
 }
@@ -16,7 +16,7 @@ var contentsCb = function(pobj) {
   pobj.contents = phantom.callback(function(currentPage, pages) {
     return contentStr.replace(/\{currentPage\}/g, currentPage).replace(/\{pages\}/g, pages);
   });
-}
+};
 
 if (phantomargs.length < 2) {
   console.log('11');
