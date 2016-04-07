@@ -1,4 +1,14 @@
 var page = require('webpage').create();
+var system = require('system');
+
+// ADDRESS CHANGE IN PARAMETERS HANDLING FOR PHANTOMJS 2.x
+var phantomargs;
+if(phantom.version.major >= 2) {
+  system.args.splice(0,1); // remove the script name from the arguments
+  phantomargs = system.args;
+} else {
+  phantomargs = phantom.args;
+}
 
 var contentsCb = function(pobj) {
   if (!pobj || !pobj.contents) return;
@@ -8,14 +18,14 @@ var contentsCb = function(pobj) {
   });
 }
 
-if (phantom.args.length < 2) {
+if (phantomargs.length < 2) {
   console.log('11');
   console.log('incorrect args');
   phantom.exit();
 } else {
 
   try {
-    var encodedOpts = atob(phantom.args[2]);
+    var encodedOpts = atob(phantomargs[2]);
   }
   catch (e) {
     console.log("Options are not base64 encoded correctly");
@@ -44,7 +54,7 @@ if (phantom.args.length < 2) {
     }
   }
 
-  if (!options.content) page.open(phantom.args[0]);
+  if (!options.content) page.open(phantomargs[0]);
 
   page.onLoadFinished = function(status) {
     if(status !== 'success'){
@@ -53,7 +63,7 @@ if (phantom.args.length < 2) {
       phantom.exit();
     } else {
       window.setTimeout(function(){
-        page.render(phantom.args[1], { format: 'pdf', quality: options.outputQuality || '80' });
+        page.render(phantomargs[1], { format: 'pdf', quality: options.outputQuality || '80' });
         console.log('success');
         phantom.exit();
       }, options.captureDelay || 400);
