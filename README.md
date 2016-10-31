@@ -2,7 +2,7 @@
 # nodepdf-series
 
 Fork of [nodepdf](https://github.com/TJkrusinski/NodePDF) to support
-multiple/series of pages:
+multiple/series of pages without spawning a new phantomjs child for every page:
 
 ```js
 var glob = require('glob');
