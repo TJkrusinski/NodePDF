@@ -30,7 +30,7 @@ exports.exec = function(url, options, cb){
     if ((err || stde) && !cb) {
       throw err || stde;
     }
-    cb(err);
+    cb ? cb(err) : null;
   });
 };
 
