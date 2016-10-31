@@ -23,8 +23,14 @@ exports.exec = function(url, options, cb){
     JSON.stringify(options),
   ]));
 
-  return child.exec(stdin.join(' '), function(err, stdo, stde){
-    cb ? cb(err) : null;
+// run this command in shell to debug phantomjs
+//  console.log(stdin.join(' '));
+
+  return child.exec(stdin.join(' '), function(err, stdo, stde) {
+    if ((err || stde) && !cb) {
+      throw err || stde;
+    }
+    cb(err);
   });
 };
 

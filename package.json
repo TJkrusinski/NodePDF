@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/arve0/nodepdf-series",
   "dependencies": {
-    "phantomjs": "^1.9.17",
+    "phantomjs-prebuilt": "^2.1.13",
     "shell-quote": "1.4.x"
   },
   "devDependencies": {
