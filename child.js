@@ -3,7 +3,7 @@
 var child = require('child_process');
 var shq = require('shell-quote').quote;
 var fs = require('fs');
-var phantomjs = require('phantomjs');
+var phantomjs = require('phantomjs-prebuilt');
 
 /**
  *  Execute the command
@@ -23,8 +23,14 @@ exports.exec = function(url, options, cb){
     JSON.stringify(options),
   ]));
 
-  return child.exec(stdin.join(' '), function(err, stdo, stde){
-    cb ? cb(err) : null;
+// run this command in shell to debug phantomjs
+//  console.log(stdin.join(' '));
+
+  return child.exec(stdin.join(' '), function(err, stdo, stde) {
+    if ((err || stde) && !cb) {
+      throw err || stde;
+    }
+    cb(err);
   });
 };
 

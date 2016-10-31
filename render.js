@@ -1,4 +1,5 @@
 var page = require('webpage').create();
+var system = require('system');
 
 var contentsCb = function(pobj) {
   if (!pobj || !pobj.contents) return;
@@ -8,12 +9,12 @@ var contentsCb = function(pobj) {
   });
 }
 
-if (phantom.args.length < 1) {
+if (system.args.length < 2) {
   console.log('11');
   console.log('incorrect args');
   phantom.exit();
 } else {
-  var options = JSON.parse(phantom.args[1]);
+  var options = JSON.parse(system.args[2]);
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);
@@ -43,7 +44,7 @@ if (phantom.args.length < 1) {
   }
 
   if (!options.content) {
-    urls = JSON.parse(phantom.args[0]);
+    urls = JSON.parse(system.args[1]);
     if (!Array.isArray(urls)) urls = [urls];
     process();
   } else {
