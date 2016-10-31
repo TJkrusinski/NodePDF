@@ -137,7 +137,7 @@ describe('all tests', function() {
 
   describe('pdf#render()', function(){
     it('renders a pdf with a callback style', function(d){
-      this.timeout(5000);
+      this.timeout(10000);
       Pdf.render('http://httpbin.org/html', function(err){
         assert.equal(err, null);
         assert(exists('httpbin.org/html.pdf'));

@@ -3,7 +3,7 @@
 var child = require('child_process');
 var shq = require('shell-quote').quote;
 var fs = require('fs');
-var phantomjs = require('phantomjs');
+var phantomjs = require('phantomjs-prebuilt');
 
 /**
  *  Execute the command
