@@ -9,6 +9,7 @@
   "main": "./index.js",
   "version": "0.3.1",
   "keywords": [
+    "phantom",
     "phantomjs",
     "pdf",
     "pdfs",
