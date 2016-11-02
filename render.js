@@ -30,11 +30,19 @@ if (system.args.length < 2) {
     }
   }
 
-  var urls;
+  var urls, i;
+  if (!options.content) {
+    urls = JSON.parse(system.args[1]);
+    if (!Array.isArray(urls)) {
+      urls = [urls];
+    }
+    i = 0;
+    process();
+  }
+
   function process() {
-    if (urls.length > 0) {
-      url = urls[0];
-      urls.splice(0, 1);
+    if (i < urls.length) {
+      var url = urls[i++];
       // add extra / on windows: file://C:/url -> file:///C:/url
       url = url.replace(/file\:\/\/([A-Za-z])\:/, 'file:///$1:');
       page.open(url);
@@ -43,18 +51,10 @@ if (system.args.length < 2) {
     }
   }
 
-  if (!options.content) {
-    urls = JSON.parse(system.args[1]);
-    if (!Array.isArray(urls)) urls = [urls];
-    process();
-  } else {
-    urls = [];
-  }
-
   page.onLoadFinished = function(status) {
     if(status !== 'success'){
-      console.log('error: ' + status);
-      console.log('unable to load ' + page.url);
+      console.log('ERROR, status: ' + status);
+      console.log('unable to load ' + urls[i]);
       process(); // recursive
     } else {
       window.setTimeout(function(){
