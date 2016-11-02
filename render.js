@@ -52,6 +52,8 @@ if (system.args.length < 2) {
       var url = urls[i++];
       // add extra / on windows: file://C:/url -> file:///C:/url
       url = url.replace(/file\:\/\/([A-Za-z])\:/, 'file:///$1:');
+      // free memory
+      page.close();
       // create a new page for each url
       page = webpage.create();
       page.onLoadFinished = onLoadFinished;
@@ -83,7 +85,7 @@ if (system.args.length < 2) {
             (out[0] == '/')) {
             out = out.substring(1);
         }
-        console.log('saving to ' + out);
+        console.log('saving' + page.url + ' to ' + out);
         page.render(out, { format: 'pdf' });
         process();
       }, options.captureDelay || 0);

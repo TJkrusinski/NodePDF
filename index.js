@@ -20,7 +20,7 @@ var defaults = {
   },
   'zoomFactor': 1,
   'args': '',
-  'captureDelay': 400
+  'captureDelay': 100
 };
 
 //code from https://github.com/rxaviers/cldr
