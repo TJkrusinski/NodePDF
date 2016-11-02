@@ -51,6 +51,9 @@ if (system.args.length < 2) {
       var url = urls[i++];
       // add extra / on windows: file://C:/url -> file:///C:/url
       url = url.replace(/file\:\/\/([A-Za-z])\:/, 'file:///$1:');
+      // create a new page for each url
+      page = webpage.create();
+      initializePage(options, page);
       page.open(url);
     } else {
       phantom.exit();
@@ -62,13 +65,14 @@ if (system.args.length < 2) {
     trace.forEach(function(item) {
         console.error('  ', item.file, ':', item.line);
     });
-    page = webpage.create();
-    initializePage(options, page);
-    process();
   };
 
   page.onLoadFinished = function(status) {
     if (status === 'success') {
+      console.error('ERROR, status: ' + status);
+      console.error('unable to load ' + urls[i]);
+      process(); // recursive
+    } else {
       window.setTimeout(function(){
         var out = page.url;
         out = out.replace(/^.*:\/\//, ''); // something://url -> 'url'
