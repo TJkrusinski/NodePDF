@@ -79,6 +79,7 @@ if (system.args.length < 2) {
     } else {
       window.setTimeout(function(){
         var out = page.url;
+        out = out.replace(/%20/g, ' ');
         out = out.replace(/^.*:\/\//, ''); // something://url -> 'url'
         out = out.replace(/(\.html|\/|)$/, '.pdf'); // if .html -> .pdf, else + .pdf
         if ((window.navigator.userAgent.indexOf("Windows") != -1) &&
