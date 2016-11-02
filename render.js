@@ -10,8 +10,7 @@ var contentsCb = function(pobj) {
 }
 
 if (system.args.length < 2) {
-  console.log('11');
-  console.log('incorrect args');
+  console.error('incorrect args');
   phantom.exit();
 } else {
   var options = JSON.parse(system.args[2]);
@@ -53,8 +52,8 @@ if (system.args.length < 2) {
 
   page.onLoadFinished = function(status) {
     if(status !== 'success'){
-      console.log('ERROR, status: ' + status);
-      console.log('unable to load ' + urls[i]);
+      console.error('ERROR, status: ' + status);
+      console.error('unable to load ' + urls[i]);
       process(); // recursive
     } else {
       window.setTimeout(function(){

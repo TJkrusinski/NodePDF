@@ -28,6 +28,8 @@ exports.exec = function(url, options, cb){
 
   return child.exec(stdin.join(' '), function(err, stdo, stde) {
     if ((err || stde) && !cb) {
+      console.error(stdo);
+      console.error(stde);
       throw err || stde;
     }
     cb ? cb(err) : null;
