@@ -32,6 +32,7 @@ if (system.args.length < 2) {
   phantom.exit();
 } else {
   var page = webpage.create();
+  page.onLoadFinished = onLoadFinished;
   var options = JSON.parse(system.args[2]);
 
   initializePage(options, page);
@@ -53,6 +54,7 @@ if (system.args.length < 2) {
       url = url.replace(/file\:\/\/([A-Za-z])\:/, 'file:///$1:');
       // create a new page for each url
       page = webpage.create();
+      page.onLoadFinished = onLoadFinished;
       initializePage(options, page);
       page.open(url);
     } else {
@@ -67,7 +69,7 @@ if (system.args.length < 2) {
     });
   };
 
-  page.onLoadFinished = function(status) {
+  function onLoadFinished (status) {
     if (status !== 'success') {
       console.error('ERROR, status: ' + status);
       console.error('unable to load ' + urls[i]);
