@@ -68,7 +68,7 @@ if (system.args.length < 2) {
   };
 
   page.onLoadFinished = function(status) {
-    if (status === 'success') {
+    if (status !== 'success') {
       console.error('ERROR, status: ' + status);
       console.error('unable to load ' + urls[i]);
       process(); // recursive
