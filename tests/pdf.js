@@ -21,7 +21,7 @@ function exists(filename) {
 
 // clean up before and after
 describe('all tests', function() {
-  var files = ['httpbin.org.pdf', 'fixture.pdf', 'about', 'about:blank.pdf', 'www.yahoo.com.pdf', 'httpbin.org/html.pdf'];
+  var files = ['httpbin.org.pdf', 'fixture.pdf', 'about', 'about:blank.pdf', 'www.yahoo.com.pdf', 'httpbin.org/html.pdf',  'httpbin.org/ip.pdf'];
   function deleteAll(){
     files.forEach(function(filename){
       if (!exists(filename)) return;
@@ -52,7 +52,7 @@ describe('all tests', function() {
   });
 
   describe('pdf#done() 1', function(){
-    it('fires done when ', function(d){
+    it('fires done when finished', function(d){
       this.timeout(20000);
       var pdf1 = new Pdf('http://httpbin.org/');
       pdf1.on('done', function(){
@@ -144,6 +144,15 @@ describe('all tests', function() {
         d();
       });
     });
-  });
 
+    it('renders several pages', function(d){
+      this.timeout(10000);
+      Pdf.render(['http://httpbin.org/html', 'http://httpbin.org/ip'], function(err){
+        assert.equal(err, null);
+        assert(exists('httpbin.org/html.pdf'));
+        assert(exists('httpbin.org/ip.pdf'));
+        d();
+      });
+    });
+  });
 });
