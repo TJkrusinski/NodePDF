@@ -31,22 +31,8 @@ if (args.length < 2) {
   console.log('incorrect args');
   phantom.exit();
 } else {
-
-  try {
-    var encodedOpts = atob(args[2]);
-  }
-  catch (e) {
-    console.log("Options are not base64 encoded correctly");
-    phantom.exit();
-  }
-
-  try {
-    var options = JSON.parse(encodedOpts);
-  }
-  catch (e) {
-    console.log("Options are not valid JSON");
-    phantom.exit();
-  }
+  var optionsFile = args[3];
+  var options = require(optionsFile);
 
   contentsCb(options.paperSize.header);
   contentsCb(options.paperSize.footer);

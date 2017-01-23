@@ -44,6 +44,7 @@ describe('pdf#done() 1', function(){
 
 describe('pdf#content', function() {
   it('fires done when content is loaded', function(d) {
+    this.timeout(20000);
     var pdf1 = new Pdf(null, 'html.pdf', {
       'content': '<html><body>Test</body></html>'
     });
@@ -113,7 +114,7 @@ describe('pdf#done() 2', function(){
 
 describe('pdf#render()', function(){
   it('renders a pdf with a callback style', function(d){
-    this.timeout(5000);
+    this.timeout(20000);
     Pdf.render('http://www.google.com', 'google2.pdf', function(err, file){
       assert.equal(err, null);
       assert.equal(FP + '/google2.pdf', file);
