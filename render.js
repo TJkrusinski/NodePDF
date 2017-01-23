@@ -18,14 +18,22 @@ var contentsCb = function(pobj) {
   });
 };
 
-if (phantomargs.length < 2) {
+var args;
+
+if (phantom.args) {
+    args = phantom.args
+} else {
+    args = require('system').args;
+}
+
+if (args.length < 2) {
   console.log('11');
   console.log('incorrect args');
   phantom.exit();
 } else {
 
   try {
-    var encodedOpts = atob(phantomargs[2]);
+    var encodedOpts = atob(args[2]);
   }
   catch (e) {
     console.log("Options are not base64 encoded correctly");
@@ -54,7 +62,7 @@ if (phantomargs.length < 2) {
     }
   }
 
-  if (!options.content) page.open(phantomargs[0]);
+  if (!options.content) page.open(args[0]);
 
   page.onLoadFinished = function(status) {
     if(status !== 'success'){
@@ -63,7 +71,7 @@ if (phantomargs.length < 2) {
       phantom.exit();
     } else {
       window.setTimeout(function(){
-        page.render(phantomargs[1], { format: 'pdf', quality: options.outputQuality || '80' });
+        page.render(args[1], { format: 'pdf', quality: options.outputQuality || '80' });
         console.log('success');
         phantom.exit();
       }, options.captureDelay || 400);
