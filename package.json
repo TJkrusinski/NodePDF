@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/TJkrusinski/NodePDF",
   "dependencies": {
-    "shell-quote": "1.4.x"
+    "shell-quote": "^1.6.1"
   },
   "devDependencies": {
     "mocha": "*"
